@@ -30,6 +30,7 @@
 <script>
   tinymce.init({
     selector: 'textarea',
+    entity_encoding : "raw",
     branding: false,
     plugins: [
       // Core editing features

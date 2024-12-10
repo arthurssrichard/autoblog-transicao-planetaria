@@ -43,7 +43,8 @@ class PostController extends Controller
         return redirect('books/1');
     }
 
-    public function show($id){
-        $post = Post::findOrFail($id);
+    public function show($slug){
+        $post = Post::where('slug','=',$slug)->first();
+        return view('posts.show',['post'=>$post]);
     }
 }

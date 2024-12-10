@@ -6,7 +6,10 @@ use App\Http\Controllers\PostController;
 use App\Http\Controllers\BookController;
 
 Route::get('/', [HomeController::class, 'index']);
+
 Route::get('/posts/create',[PostController::class, 'create']);
+Route::get('/posts/{slug}',[PostController::class, 'show']);
+
 Route::post('/posts/auto-create',[PostController::class,'autoCreate']);
 Route::post('/posts',[PostController::class, 'store']);
 
