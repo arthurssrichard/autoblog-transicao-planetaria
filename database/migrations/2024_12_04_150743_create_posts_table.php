@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('posts', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(User::class);
-            $table->foreignIdFor(Category::class);
+            $table->foreignIdFor(Category::class)->default(1);
             $table->string('title');
             $table->string('slug')->unique();
             $table->string('body');

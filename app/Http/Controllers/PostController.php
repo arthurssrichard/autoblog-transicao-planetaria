@@ -30,7 +30,15 @@ class PostController extends Controller
     }
 
     public function store(Request $request){
-        dd($request);
+        $post = new Post();
+
+        $post->title = $request->title;
+        $post->slug = $request->slug;
+        $post->body = $request->body;
+
+        $post->save();
+
+        return redirect('books/1');
     }
 
     public function show($id){
