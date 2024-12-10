@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Services\PdfService;
 use Illuminate\Support\Str;
 use App\Models\Book;
+use App\Models\Post;
 
 class PostController extends Controller
 {
@@ -17,10 +18,12 @@ class PostController extends Controller
         $title = $request->input('title');
         $slug = Str::slug($title); //(new SlugNormalizer)->normalize($title);
         
+        $title = preg_replace('/\./','',$title);
+
         $bookId = $request->input('book_id');
         $book = Book::findOrFail($bookId);
+
         $mensagem = (new PdfService)->exibirMensagem($title,$book);
-        
         $mensagem = (new PdfService)->formatarMensagem($mensagem, $title, $book);
 
         return view('posts.create',['title' => $title, 'slug'=>$slug, 'mensagem'=>$mensagem]);
@@ -28,5 +31,9 @@ class PostController extends Controller
 
     public function store(Request $request){
         dd($request);
+    }
+
+    public function show($id){
+        $post = Post::findOrFail($id);
     }
 }
