@@ -74,4 +74,6 @@
         <a class="text-gray-500 hover:text-yellow-500" href="">Login</a>
         <a class="text-gray-500 hover:text-yellow-500" href="">Explore</a>
     </footer>
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 </body>

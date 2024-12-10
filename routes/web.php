@@ -7,11 +7,14 @@ use App\Http\Controllers\BookController;
 
 Route::get('/', [HomeController::class, 'index']);
 Route::get('/posts/create',[PostController::class, 'create']);
+Route::post('/posts/auto-create',[PostController::class,'autoCreate']);
 Route::post('/posts',[PostController::class, 'store']);
 
 
 Route::get('/books/create',[BookController::class, 'create']);
 Route::post('/books',[BookController::class, 'store']);
+Route::get('/books/{id}',[BookController::class, 'show']);
+
 
 Route::middleware([
     'auth:sanctum',

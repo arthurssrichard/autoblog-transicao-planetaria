@@ -8,21 +8,25 @@
             @csrf
             <div>
                 <label for="title">Título</label>
-                <input type="text" name="title" id="title" class="bg-gray-50 border">
+                <input type="text" name="title" id="title" class="bg-gray-50 border"
+                value="{{isset($title) ? $title : ''}}">
             </div>
             <div>
                 <label for="slug">Slug</label>
-                <input type="text" name="slug" id="slug" class="bg-gray-50 border">
+                <input type="text" name="slug" id="slug" class="bg-gray-50 border"
+                value="{{isset($slug) ? $slug : ''}}">
             </div>
             <textarea name="body">
-            Welcome to TinyMCE!
+              @if(isset($mensagem))
+                {{$mensagem}}
+              @endif
             </textarea>
             <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-2" type="submit">Adicionar</button>
         </form>
     </div>
 
 </main>
-<script src="https://cdn.tiny.cloud/1/7zynzszegzmc7q79y4uo8prcw2n3axtc2sxgrnnwds3znfwl/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>
+<script src="https://cdn.tiny.cloud/1/{{env('TINYMCE_API_KEY')}}/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>
 <script>
   tinymce.init({
     selector: 'textarea',
@@ -44,6 +48,11 @@
       { value: 'Email', title: 'Email' },
     ],
     ai_request: (request, respondWith) => respondWith.string(() => Promise.reject('See docs to implement AI Assistant')),
+    content_style: 'body {text-align: justify;',
+    language: 'pt_BR',
+    language_url: 'js/tinymce/langs/pt_BR.js',
+    browser_spellcheck: true,
+    spellchecker_language: 'pt_BR'
   });
 </script>
 @endsection
