@@ -19,7 +19,7 @@ return new class extends Migration
             $table->foreignIdFor(Category::class)->default(1);
             $table->string('title');
             $table->string('slug')->unique();
-            $table->string('body');
+            $table->longtext('body');
             $table->string('image')->nullable();
             $table->timestamp('published_at')->nullable();
             $table->json('tags')->nullable();

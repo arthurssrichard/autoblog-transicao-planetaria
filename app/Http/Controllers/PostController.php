@@ -7,6 +7,7 @@ use App\Services\PdfService;
 use Illuminate\Support\Str;
 use App\Models\Book;
 use App\Models\Post;
+use Illuminate\Support\Facades\Auth;
 
 class PostController extends Controller
 {
@@ -35,6 +36,7 @@ class PostController extends Controller
         $post->title = $request->title;
         $post->slug = $request->slug;
         $post->body = $request->body;
+        $post->user_id = Auth::user()->id;
 
         $post->save();
 
