@@ -9,6 +9,7 @@ Route::get('/', [HomeController::class, 'index']);
 
 Route::get('/posts/create',[PostController::class, 'create']);
 Route::get('/posts/{slug}',[PostController::class, 'show']);
+Route::get('/posts',[PostController::class,'index']);
 
 Route::post('/posts/auto-create',[PostController::class,'autoCreate']);
 Route::post('/posts',[PostController::class, 'store']);

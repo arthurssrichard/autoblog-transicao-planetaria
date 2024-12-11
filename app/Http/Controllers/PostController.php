@@ -15,6 +15,10 @@ class PostController extends Controller
         return view('posts.create');
     }
 
+    public function index(){
+        return view('posts.index');
+    }
+
     public function autoCreate(Request $request){
         $title = $request->input('title');
         $slug = Str::slug($title); //(new SlugNormalizer)->normalize($title);
