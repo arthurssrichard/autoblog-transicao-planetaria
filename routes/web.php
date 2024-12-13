@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\BookController;
+use App\Http\Controllers\TTSController;
 
 Route::get('/', [HomeController::class, 'index']);
 
@@ -13,6 +14,7 @@ Route::get('/posts',[PostController::class,'index']);
 
 Route::post('/posts/auto-create',[PostController::class,'autoCreate']);
 Route::post('/posts',[PostController::class, 'store']);
+Route::post('/tts/synthesize', [TTSController::class, 'synthesize']);
 
 
 Route::get('/books/create',[BookController::class, 'create']);

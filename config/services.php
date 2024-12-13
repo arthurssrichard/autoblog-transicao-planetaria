@@ -34,5 +34,8 @@ return [
             'channel' => env('SLACK_BOT_USER_DEFAULT_CHANNEL'),
         ],
     ],
+    'google_text_to_speech' => [
+        'api_key' => env('GOOGLE_TTS_API_KEY'),
+    ]
 
 ];

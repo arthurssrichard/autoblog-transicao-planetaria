@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Controllers\TTSController;
+use App\Services\GoogleTextToSpeechService;
 use App\Services\PdfService;
 use Illuminate\Support\Str;
 use App\Models\Book;
@@ -11,6 +13,13 @@ use Illuminate\Support\Facades\Auth;
 
 class PostController extends Controller
 {
+    protected $ttsService;
+
+    public function __construct(GoogleTextToSpeechService $ttsService)
+    {
+        $this->ttsService = $ttsService;
+    }
+
     public function create(){
         return view('posts.create');
     }
@@ -42,6 +51,9 @@ class PostController extends Controller
         $post->body = $request->body;
         $post->user_id = Auth::user()->id;
 
+        $audio_path = (new TTSController($this->ttsService))->synthesize($request->body, $request->slug);
+        $post->audio = $audio_path;
+        
         $post->save();
 
         return redirect('books/1');

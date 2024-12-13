@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('slug')->unique();
             $table->longtext('body');
             $table->string('image')->nullable();
+            $table->string('audio')->nullable();
             $table->timestamp('published_at')->nullable();
             $table->json('tags')->nullable();
             $table->timestamps();
