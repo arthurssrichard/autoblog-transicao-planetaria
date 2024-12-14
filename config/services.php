@@ -36,6 +36,12 @@ return [
     ],
     'google_text_to_speech' => [
         'api_key' => env('GOOGLE_TTS_API_KEY'),
-    ]
+    ],
+    'pexels' => [
+        'api_key' => env('PEXELS_API_KEY'),
+    ],
+    'groq' => [
+        'api_key' => env('GROQ_API_KEY'),
+    ],
 
 ];
