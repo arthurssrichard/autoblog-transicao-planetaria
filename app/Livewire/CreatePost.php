@@ -15,9 +15,10 @@ class CreatePost extends Component
     public $title;
     public $slug;
     public $mensagem;
-    public $images;
-    public $image;
     public $consulta = '';
+    public $images;
+    public $imageUpload;
+    public $imageFromWeb;
 
     public function mount($title = '', $slug = '', $mensagem = '')
     {
@@ -63,6 +64,15 @@ class CreatePost extends Component
 
         //pega a query e procura no pexels
         $this->images = $pexels->photos($generatedQuery, 4)['photos'];
+    }
+
+    public function toggleImage($imageId){
+        $this->imageFromWeb = collect($this->images)->firstWhere('id',$imageId);
+        $this->reset('imageUpload');
+    }
+
+    public function updatedImageUpload(){
+        $this->reset('imageFromWeb');
     }
 
     public function render()
