@@ -4,12 +4,19 @@ namespace App\Livewire;
 
 use Livewire\Component;
 use App\Services\GroqService;
+use App\Services\PexelsService;
+use Livewire\WithFileUploads;
+
 
 class CreatePost extends Component
 {
+    use WithFileUploads;
+
     public $title;
     public $slug;
     public $mensagem;
+    public $images;
+    public $image;
     public $consulta = '';
 
     public function mount($title = '', $slug = '', $mensagem = '')
@@ -21,6 +28,8 @@ class CreatePost extends Component
 
     public function generateImage(){
         $groq = new GroqService();
+        $pexels = new PexelsService();
+
         $title = $this->title;
         $content = strip_tags($this->mensagem);
         $message = "
@@ -50,7 +59,10 @@ class CreatePost extends Component
         $content
         ";
         $generatedQuery = $groq->message($message);
-        dd($generatedQuery);
+        $this->consulta = $generatedQuery;
+
+        //pega a query e procura no pexels
+        $this->images = $pexels->photos($generatedQuery, 4)['photos'];
     }
 
     public function render()
