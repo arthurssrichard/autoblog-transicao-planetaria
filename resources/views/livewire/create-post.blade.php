@@ -1,6 +1,6 @@
 <div class="mb-10">
     <h2 class="mt-16 mb-5 text-3xl text-yellow-900 font-bold">Novo post</h2>
-    <form action="/posts" method="POST">
+    <form action="" wire:submit="store">
         @csrf
         <div>
             <label for="title">Título</label>
@@ -10,11 +10,9 @@
             <label for="slug">Slug</label>
             <input type="text" name="slug" id="slug" class="bg-gray-50 border" wire:model="slug">
         </div>
-        <textarea name="body">
-              @if(isset($mensagem))
-                {{$mensagem}}
-              @endif
-        </textarea>
+        <div>
+            <x-input.tinymce wire:model="mensagem" placeholder="Type anything you want..." />
+        </div>
         @if($images)
         <div>
             <h2>Imagens sugeridas:</h2>
@@ -39,7 +37,7 @@
             @if($imageFromWeb && !$errors->has('imageFromWeb'))
                 <img src="{{ $imageFromWeb['src']['tiny'] }}" alt="uploaded" class="rounded shadow-sm">
             @endif
-            
+
         </div>
         <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-2" wire:click="generateImage" type="button">Gerar imagem</button>
         <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-2" type="submit">Adicionar</button>

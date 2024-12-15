@@ -8,11 +8,11 @@ use App\Services\GoogleTextToSpeechService;
 
 class TTSController extends Controller
 {
-    protected $ttsService;
+    private $ttsService;
 
-    public function __construct(GoogleTextToSpeechService $ttsService)
+    public function __construct()
     {
-        $this->ttsService = $ttsService;
+        $this->ttsService = new GoogleTextToSpeechService();
     }
 
     public function synthesize(String $content, String $slug)

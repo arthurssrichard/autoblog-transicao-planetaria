@@ -4,21 +4,33 @@ namespace App\Livewire;
 
 use Livewire\Component;
 use App\Services\GroqService;
+use App\Http\Controllers\TTSController;
+use Livewire\Attributes\Rule;
 use App\Services\PexelsService;
 use Livewire\WithFileUploads;
-
+use App\Models\Post;
+use Illuminate\Support\Facades\Auth;
 
 class CreatePost extends Component
 {
     use WithFileUploads;
 
+    #[Rule('required|min:2|max:50')]
     public $title;
+
+    #[Rule('required|min:2|max:50')]
     public $slug;
+
+    #[Rule('required|min:5')]
     public $mensagem;
+
+    #[Rule('nullable|sometimes|image')]
+    public $imageUpload;
+
+    public $imageFromWeb;
+
     public $consulta = '';
     public $images;
-    public $imageUpload;
-    public $imageFromWeb;
 
     public function mount($title = '', $slug = '', $mensagem = '')
     {
@@ -73,6 +85,36 @@ class CreatePost extends Component
 
     public function updatedImageUpload(){
         $this->reset('imageFromWeb');
+    }
+
+    public function store(){
+        $post = new Post();
+
+        $ttsController = new TTSController();
+        
+        $this->validate();
+
+        $audio_path = $ttsController->synthesize($this->mensagem, $this->slug);
+
+        if($this->imageFromWeb){
+            $post->image = $this->imageFromWeb['src']['medium'];
+        }else if($this->imageUpload){
+            $imageName = $this->slug . "." . $this->imageUpload->extension();
+
+            $this->imageUpload->storeAs('uploads/images', $imageName,'public');
+
+            $post->image = 'uploads/images/' . $imageName;
+        }
+
+        $post->title = $this->title;
+        $post->slug = $this->slug;
+        $post->body = $this->mensagem;
+        $post->audio = $audio_path;
+        $post->user_id = Auth::user()->id;
+
+        $post->save();
+
+        return redirect('books/1');
     }
 
     public function render()
