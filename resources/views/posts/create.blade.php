@@ -1,7 +1,7 @@
 @extends('layouts.main')
 @section('title','Novo post')
 @section('content')
-<main class="container mx-auto px-5 flex flex-grow">
+<main>
   <livewire:create-post :title="$title" :slug="$slug" :mensagem="$mensagem"/>
 </main>
 @livewireScripts

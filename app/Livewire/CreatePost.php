@@ -29,7 +29,8 @@ class CreatePost extends Component
 
     public $imageFromWeb;
 
-    public $consulta = '';
+    public $consulta;
+    public $consultaGerada;
     public $images;
 
     public function mount($title = '', $slug = '', $mensagem = '')
@@ -46,36 +47,29 @@ class CreatePost extends Component
         $title = $this->title;
         $content = strip_tags($this->mensagem);
         $message = "
-        Para a próxima tarefa, quero que aja como Ana. Ana é uma funcionária objetiva e interessada em literatura.
+            Ana, preciso que você me forneça APENAS uma frase curta (1 a 3 palavras), em inglês, diretamente relacionada ao título e ao conteúdo do texto. A frase deve ser genérica e visualmente representativa, de forma que haja uma alta probabilidade de encontrar imagens correspondentes no site Pexels (por exemplo: 'Mountain landscape', 'Golden sky', 'Forest path') mas ainda tendo alguma relação com o título ou corpo. Caso não pense num termo adequado, retorne termos relacionados à natureza.
 
-        Ana, vou te fornecer um título de um blogpost, e você deve ler esse texto e fornecer uma frase com 1 (uma) até 3 (três) palavras em inglês baseado no texto, dando maior prioridade ao título.
+            Por favor, siga estas instruções com atenção:
+            1. A frase NÃO deve conter aspas, pontuação ou qualquer outra palavra extra.
+            2. Considere tanto o título quanto o corpo do texto.
+            3. Responda APENAS com a frase solicitada, sem explicações adicionais.
 
-        Para maior contextualização, você faz parte de um projeto chamado Autoblog, do blog transicaoplanetaria.com, um blog com várias mensagens espíritas. Segue a descrição do site:
-        Aqui você vai encontrar todas as informações sobre Transição Planetária, o que este processo tanto impacta na humanidade, reforma íntima, encarnação chave, oportunidade de melhoria e principalmente instrumentos para direcionar sua mente e suas atitudes voltadas ao próximo. Sem Caridade não há Salvação. Paz e Luz !
+            Título: $title 
+            Conteúdo: $content 
 
-        Ana, a frase será utilizada para uma consulta automática no pexels por imagens relacionadas para adicionar no texto. Muitas vezes as imagens são relacionadas à natureza e paisagens, mas não é uma regra.
-
-        Ana, gere a frase pensando nos possíveis resultados no Pexels, de forma que haja pouca chance de poucos ou nenhum resultado ser exibido. Além disso, retorne apenas a mensagem, para que o conteúdo da sua resposta seja diretamente colocado na API do pexels. Ou seja, responda APENAS a frase que foi solicitada, sem nenhum conteúdo de texto a mais.
-
-        Exemplo:
-        'A natureza é muito bonita'
-        sua resposta será algo como:
-        'Nature'
-        Nada além disso.
-        Outro exemplo:
-        'A humanidade caminha em passos largos para a guerra'
-        sua resposta será algo como:
-        'Dark road on the forest'
-
-        Agora, segue o título: $title
-        Considere também o texto, mas bem menos que o título:
-        $content
+            Lembre-se: a frase será utilizada como query de busca no Pexels, então ela deve ser genérica, visualmente clara e fácil de associar a imagens disponíveis.
         ";
-        $generatedQuery = $groq->message($message);
-        $this->consulta = $generatedQuery;
+        if(!$this->consulta){
+            $this->consulta = $groq->message($message);
+            
+            $pattern = '/"(.*?)"/';
+            if(preg_match_all($pattern, $this->consulta, $matches)){
+                $this->consulta = implode(' ', $matches[1]);
+            }
+        }
+        $this->images = $pexels->photos($this->consulta, 10)['photos'];
 
         //pega a query e procura no pexels
-        $this->images = $pexels->photos($generatedQuery, 4)['photos'];
     }
 
     public function toggleImage($imageId){
