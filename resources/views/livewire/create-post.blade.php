@@ -71,6 +71,48 @@
             @endif
         </div>
 
-        <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-2" type="submit">Adicionar</button>
+        <div class="grid lg:grid-cols-2 lg:gap-6 sm:gap-4 mb-5">
+
+            <div class="p-6 mt-5 bg-white shadow-md rounded-lg w-full flex flex-row justify-between">
+                <div class="w-5/12">
+                    <h3 class="text-xl font-bold mb-2">Categoria</h3>
+                    <select wire:model="categoria" class="select-label" id="">
+                        <option selected="" required>Categorias</option>
+                        @foreach($categorias as $categoria)
+                            <option value="{{$categoria->id}}">{{$categoria->name}}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="w-6/12">
+                    <h3 class="text-xl font-bold mb-2">Tags</h3>
+                    <div class="border rounded-lg">
+                        <input type="text" class="border-0 h-6 w-full py-3 focus:outline-none text-base" wire:keydown.prevent.enter="addTag" wire:model="currentTag" placeholder="Nova tag">
+                        <hr>
+                        <div class="py-3 px-1.5 min-h-5">
+                            @foreach($tags as $index => $tag)
+                            <button type="button" class="py-0.5 px-2 inline-flex items-center mb-1 gap-x-1 text-sm rounded-xl border border-gray-200 bg-white text-gray-800 hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:text-white dark:border-neutral-700 dark:hover:bg-neutral-800">
+                                <ion-icon wire:ignore name="close-outline" wire:click="removeTag({{$index}})"></ion-icon>
+                                {{$tag}}
+                            </button>
+                            @endforeach
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="p-6 mt-5 rounded-lg w-full">
+                <h3 class="text-xl font-bold mb-2">Publicação</h3>
+                <div class="flex flex-row space-x-5">
+                    <div class="flex flex-row space-x-2">
+                        <input type="date"  class="py-2 px-3 block border-gray-200 rounded-lg" wire:model.lazy="date">
+                        <input type="time"  class="py-2 px-3 block border-gray-200 rounded-lg" wire:model.lazy="time">
+                    </div>
+                    <button class="btn-default bg-blue-600 text-white hover:bg-blue-700 focus:bg-blue-700" type="submit">
+                        {{  (strtotime($this->date . ' ' . $this->time) === strtotime(date('Y-m-d H:i'))) ? "Publicar agora" : "Agendar" }}
+                    </button>
+                </div>
+            </div>
+        </div>
     </form>
 </section>

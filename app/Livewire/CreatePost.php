@@ -5,6 +5,7 @@ namespace App\Livewire;
 use Livewire\Component;
 use App\Services\GroqService;
 use App\Http\Controllers\TTSController;
+use App\Models\Category;
 use Livewire\Attributes\Rule;
 use App\Services\PexelsService;
 use Livewire\WithFileUploads;
@@ -27,17 +28,26 @@ class CreatePost extends Component
     #[Rule('nullable|sometimes|image')]
     public $imageUpload;
 
+    public $categoria = null;
+
     public $imageFromWeb;
 
     public $consulta;
     public $consultaGerada;
     public $images;
+    public $currentTag;
+    public $tags = [];
+
+    public $date;
+    public $time;
 
     public function mount($title = '', $slug = '', $mensagem = '')
     {
         $this->title = $title;
         $this->slug = $slug;
         $this->mensagem = $mensagem;  
+        $this->date = date('Y-m-d');
+        $this->time = date('H:i');
     }
 
     public function generateImage(){
@@ -89,21 +99,22 @@ class CreatePost extends Component
         $this->validate();
 
         $audio_path = $ttsController->synthesize($this->mensagem, $this->slug);
+        $post->audio = $audio_path;
 
         if($this->imageFromWeb){
             $post->image = $this->imageFromWeb['src']['medium'];
         }else if($this->imageUpload){
             $imageName = $this->slug . "." . $this->imageUpload->extension();
-
             $this->imageUpload->storeAs('uploads/images', $imageName,'public');
-
             $post->image = 'uploads/images/' . $imageName;
         }
-
+        
         $post->title = $this->title;
         $post->slug = $this->slug;
         $post->body = $this->mensagem;
-        $post->audio = $audio_path;
+        $post->tags = $this->tags;
+        $post->category_id = $this->categoria;
+        $post->published_at = $this->date ." ". $this->time;
         $post->user_id = Auth::user()->id;
 
         $post->save();
@@ -111,8 +122,22 @@ class CreatePost extends Component
         return redirect('books/1');
     }
 
+    public function addTag(){
+        $index = count($this->tags) + 1;
+        $this->tags[$index] = $this->currentTag;
+        $this->reset('currentTag');
+    }
+    public function removeTag($index){
+        if(isset($this->tags[$index])){
+            unset($this->tags[$index]);
+
+            $this->tags = array_values($this->tags);
+        }
+    }
+
     public function render()
     {
-        return view('livewire.create-post');
+        $categorias = Category::all();
+        return view('livewire.create-post',["categorias" => $categorias]);
     }
 }

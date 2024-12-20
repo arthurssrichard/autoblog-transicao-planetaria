@@ -6,6 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Post extends Model
 {
+    protected $casts = [
+        'tags' => 'array',
+    ];
+    protected $guarded = [];
     public function getReadingTime(){
         $words = str_word_count($this->body);
         $minutes = round($words/250);
