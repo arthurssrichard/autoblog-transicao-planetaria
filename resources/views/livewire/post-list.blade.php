@@ -30,7 +30,6 @@
                     <div class="absolute inset-y-0 start-0 flex items-center pointer-events-none ps-2 peer-disabled:opacity-50 peer-disabled:pointer-events-none">
                         <ion-icon name="search-outline"></ion-icon>
                     </div>
-
                 </div>
             </div>
     

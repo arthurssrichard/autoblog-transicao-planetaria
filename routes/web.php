@@ -6,6 +6,9 @@ use App\Http\Controllers\PostController;
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\TTSController;
 use App\Http\Controllers\CategoryController;
+use Intervention\Image\ImageManager;
+use Intervention\Image\Drivers\Gd\Driver;
+
 
 Route::get('/categories/create',[CategoryController::class,'create']);
 Route::get('/categories/{id}/edit',[CategoryController::class,'edit']);
@@ -26,6 +29,7 @@ Route::post('/books',[BookController::class, 'store']);
 Route::get('/books/{id}',[BookController::class, 'show']);
 
 
+Route::get('/admin/posts',[PostController::class,'indexAdmin']);
 
 Route::middleware([
     'auth:sanctum',

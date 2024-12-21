@@ -20,18 +20,6 @@ class PostController extends Controller
         $this->ttsService = $ttsService;
     }
 
-    public function create(){
-        return view('posts.create',[
-            'title' => '',
-            'slug' => '',
-            'mensagem' => '',
-        ]);
-    }
-
-    public function index(){
-        return view('posts.index');
-    }
-
     public function autoCreate(Request $request){
         $title = $request->input('title');
         $slug = Str::slug($title); //(new SlugNormalizer)->normalize($title);
@@ -44,9 +32,25 @@ class PostController extends Controller
         $mensagem = (new PdfService)->exibirMensagem($title,$book);
         $mensagem = (new PdfService)->formatarMensagem($mensagem, $title, $book);
 
-        return view('posts.create',['title' => $title, 'slug'=>$slug, 'mensagem'=>$mensagem]);
+        return view('admin.posts.create',['title' => $title, 'slug'=>$slug, 'mensagem'=>$mensagem]);
     }
 
+    public function create(){
+        return view('admin.posts.create',[
+            'title' => '',
+            'slug' => '',
+            'mensagem' => '',
+        ]);
+    }
+
+    public function indexAdmin(){
+        return view('admin.posts.index');
+    }
+
+    // PARA O PÚBLICO
+    public function index(){
+        return view('posts.index');
+    }
     public function store(Request $request){
         $post = new Post();
 

@@ -3,7 +3,7 @@
 @section('content')
 <main>
     <section 
-        style="background-image: url('{{ str_starts_with($post->image, 'https://images.pexels.com') ? $post->image : asset('storage/'.$post->image) }}');" 
+        style="background-image: url('{{ $post->imagePath }}');" 
         aria-label="{{ $post->title }}"
         class="grid lg:grid-cols-2 gap-4 sm:gap-6 bg-center bg-no-repeat bg-cover backdrop-blur-md">
 
