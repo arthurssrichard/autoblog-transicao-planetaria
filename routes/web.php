@@ -5,6 +5,9 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\TTSController;
+use App\Http\Controllers\CategoryController;
+
+Route::get('/categories/create',[CategoryController::class,'create']);
 
 Route::get('/', [HomeController::class, 'index']);
 
@@ -20,6 +23,7 @@ Route::post('/tts/synthesize', [TTSController::class, 'synthesize']);
 Route::get('/books/create',[BookController::class, 'create']);
 Route::post('/books',[BookController::class, 'store']);
 Route::get('/books/{id}',[BookController::class, 'show']);
+
 
 
 Route::middleware([
