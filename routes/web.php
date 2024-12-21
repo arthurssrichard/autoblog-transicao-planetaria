@@ -8,6 +8,7 @@ use App\Http\Controllers\TTSController;
 use App\Http\Controllers\CategoryController;
 
 Route::get('/categories/create',[CategoryController::class,'create']);
+Route::get('/categories/{id}/edit',[CategoryController::class,'edit']);
 
 Route::get('/', [HomeController::class, 'index']);
 

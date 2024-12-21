@@ -9,6 +9,8 @@ use App\Models\Category;
 
 class CreateCategory extends Component
 {
+    public $categoryId;
+
     #[Rule('required|min:2|max:50')]
     public $name;
 
@@ -18,9 +20,24 @@ class CreateCategory extends Component
     #[Rule('required')]
     public $color;
 
-    public function store(){
+    public function mount($name = null, $slug = null, $color = null, $categoryId = null){
+        $this->name = $name;
+        $this->slug = $slug;
+        $this->color = $color;
+        $this->categoryId = $categoryId;
+    }
+
+
+    public function submit(){
         $validated = $this->validate();
-        Category::create($validated);
+
+        if($this->categoryId){
+            $category = Category::findOrFail($this->categoryId);
+            $category->update($validated);
+        }else{
+            Category::create($validated);
+        }
+
         return redirect('/categories');
     }
     public function generateSlug(){
