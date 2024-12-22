@@ -10,27 +10,35 @@ use Intervention\Image\ImageManager;
 use Intervention\Image\Drivers\Gd\Driver;
 
 
-Route::get('/categories/create',[CategoryController::class,'create']);
-Route::get('/categories/{id}/edit',[CategoryController::class,'edit']);
+/* ADMIN ROUTES */
+// Admin categories routes
+Route::get('/blogadmin/categories/create',[CategoryController::class,'create']);
+Route::get('/blogadmin/categories/{id}/edit',[CategoryController::class,'edit']);
 
-Route::get('/', [HomeController::class, 'index']);
+// Admin posts routes
+Route::get('/blogadmin/posts',[PostController::class,'indexAdmin']);
+Route::get('/blogadmin/posts/create',[PostController::class, 'create']);
+Route::get('/blogadmin/posts/{id}/edit',[PostController::class, 'edit']);
+Route::post('/blogadmin/posts/auto-create',[PostController::class,'autoCreate']);
+Route::post('/blogadmin/posts',[PostController::class, 'store']);
 
-Route::get('/posts/create',[PostController::class, 'create']);
+// Admin books routes
+Route::get('/blogadmin/books/create',[BookController::class, 'create']);
+Route::post('/blogadmin/books',[BookController::class, 'store']);
+Route::get('/blogadmin/books/{id}',[BookController::class, 'show']);
+
+
+
+
+/* PUBLIC ROUTES */
+// Post routes
 Route::get('/posts/{slug}',[PostController::class, 'show']);
-Route::get('/admin/posts/{id}/edit',[PostController::class, 'edit']);
 Route::get('/posts',[PostController::class,'index']);
 
-Route::post('/posts/auto-create',[PostController::class,'autoCreate']);
-Route::post('/posts',[PostController::class, 'store']);
+// General routes
+Route::get('/', [HomeController::class, 'index']);
 Route::post('/tts/synthesize', [TTSController::class, 'synthesize']);
 
-
-Route::get('/books/create',[BookController::class, 'create']);
-Route::post('/books',[BookController::class, 'store']);
-Route::get('/books/{id}',[BookController::class, 'show']);
-
-
-Route::get('/admin/posts',[PostController::class,'indexAdmin']);
 
 Route::middleware([
     'auth:sanctum',
