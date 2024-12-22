@@ -41,7 +41,9 @@
                     </td>
 
                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-neutral-200 text-start">
-                        <ion-icon name="trash-outline" class="text-red-500 text-xl" wire:ignore></ion-icon>
+                        <button wire:click="delete({{$post->id}})">
+                            <ion-icon name="trash-outline" class="text-red-500 text-xl" wire:ignore></ion-icon>
+                        </button>
                     </td>
                 </tr>
 

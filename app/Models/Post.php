@@ -36,4 +36,7 @@ class Post extends Model
     public function getImagePathAttribute(){
         return  (str_starts_with($this->image, 'https://') ? $this->image : asset('storage/'.$this->image));
     }
+    public function imageIsLocal(){
+        return str_starts_with($this->image, '/uploads/images');
+    }
 }

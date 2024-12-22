@@ -6,6 +6,7 @@ use Livewire\Component;
 use Livewire\WithPagination;
 use App\Models\Post;
 use Livewire\Attributes\Url;
+use Illuminate\Support\Facades\Storage;
 
 class AdminPostList extends Component
 {
@@ -20,6 +21,21 @@ class AdminPostList extends Component
     public function updatedSearch(){
         $this->resetPage(); 
     }
+
+    public function delete($postId){
+
+        $post = Post::findOrFail($postId);
+
+        if($post->audio){
+            Storage::delete($post->audio);
+        }
+        if($post->imageIsLocal()){
+            Storage::delete($post->image);
+        }
+        
+        $post->delete();
+    }
+
 
     public function render()
     {
