@@ -12,6 +12,7 @@ class Post extends Model
 
     protected $casts = [
         'tags' => 'array',
+        'published_at' => 'datetime',
     ];
 
     protected $guarded = [];
@@ -33,7 +34,6 @@ class Post extends Model
         return $this->belongsTo('App\Models\Category');
     }
     public function getImagePathAttribute(){
-        
-        return  (str_starts_with($this->image, 'https://images.pexels.com') ? $this->image : asset('storage/'.$this->image));
+        return  (str_starts_with($this->image, 'https://') ? $this->image : asset('storage/'.$this->image));
     }
 }

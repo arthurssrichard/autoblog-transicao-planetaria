@@ -21,7 +21,7 @@
             <tbody> @foreach($posts as $post)
                 <tr class="border-b">
                     <td class="px-6 py-4 whitespace-normal text-sm font-medium text-gray-800 dark:text-neutral-200 text-start text-ellipsis">
-                        <a href="/admin/posts/{{$post->id}}/edit" wire:navigate>{{$post->title}}</a>
+                        <a href="/admin/posts/{{$post->id}}/edit" wire:navigate class="hover:underline">{{$post->title}}</a>
                     </td>
                     <td class="px-6 py-4 whitespace-normal text-sm font-medium text-gray-800 dark:text-neutral-200 ">{{$post->slug}}</td>
                     <td class="px-6 py-4 whitespace-nowrap text-xs font-medium text-gray-800 dark:text-neutral-200 text-start">

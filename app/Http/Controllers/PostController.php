@@ -42,6 +42,21 @@ class PostController extends Controller
             'mensagem' => '',
         ]);
     }
+    public function edit($id){
+        $post = Post::findOrFail($id);
+        return view('admin.posts.create',[
+            'title' => $post->title,
+            'slug' => $post->slug,
+            'mensagem' => $post->body,
+
+            'tags' => $post->tags ?? [],
+            'category_id' => $post->category->id,
+            'date' => $post->published_at ? $post->published_at->format('Y-m-d') : null,
+            'time' => $post->published_at ? $post->published_at->format('H:i') : null,
+            'imagePath' => $post?->imagePath,   
+            'postId' => $id, 
+        ]);
+    }
 
     public function indexAdmin(){
         return view('admin.posts.index');

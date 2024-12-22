@@ -28,27 +28,29 @@ class CreatePost extends Component
     #[Rule('nullable|sometimes|image')]
     public $imageUpload;
 
-    public $categoria = null;
-
+    public $categoriaSelecionada;
     public $imageFromWeb;
-
+    public $image;
     public $consulta;
     public $consultaGerada;
     public $images;
     public $currentTag;
     public $tags = [];
-
     public $date;
     public $time;
+    public $post_id;
 
-    public function mount($title = '', $slug = '', $mensagem = '')
-    {
+    public function mount($title = '', $slug = '', $mensagem = '', $tags = '', $category_id = null, $date = null, $time = null, $post_id = null){
         $this->title = $title;
         $this->slug = $slug;
-        $this->mensagem = $mensagem;  
-        $this->date = date('Y-m-d');
-        $this->time = date('H:i');
+        $this->mensagem = $mensagem;
+        $this->tags = $tags;
+        $this->categoriaSelecionada = $category_id;
+        $this->date = $date ?? date('Y-m-d');
+        $this->time = $time ?? date('H:i');
+        $this->post_id = $post_id;
     }
+    
 
     public function generateImage(){
         $groq = new GroqService();
@@ -92,7 +94,11 @@ class CreatePost extends Component
     }
 
     public function store(){
-        $post = new Post();
+        if($this->post_id){
+            $post = Post::findOrFail($this->post_id);
+        }else{
+            $post = new Post();
+        }
 
         $ttsController = new TTSController();
         
@@ -101,6 +107,22 @@ class CreatePost extends Component
         $audio_path = $ttsController->synthesize($this->mensagem, $this->slug);
         $post->audio = $audio_path;
 
+        $post->image = $this->handleImageUpload($post);   
+
+        $post->title = $this->title;
+        $post->slug = $this->slug;
+        $post->body = $this->mensagem;
+        $post->tags = $this->tags;
+        $post->category_id = $this->categoriaSelecionada;
+        $post->published_at = $this->date ." ". $this->time;
+        $post->user_id = Auth::user()->id;
+
+        $post->save();
+
+        return redirect('books/1');
+    }
+
+    protected function handleImageUpload($post){
         if($this->imageFromWeb){
             $post->image = $this->imageFromWeb['src']['medium'];
         }else if($this->imageUpload){
@@ -108,18 +130,7 @@ class CreatePost extends Component
             $this->imageUpload->storeAs('uploads/images', $imageName,'public');
             $post->image = 'uploads/images/' . $imageName;
         }
-        
-        $post->title = $this->title;
-        $post->slug = $this->slug;
-        $post->body = $this->mensagem;
-        $post->tags = $this->tags;
-        $post->category_id = $this->categoria;
-        $post->published_at = $this->date ." ". $this->time;
-        $post->user_id = Auth::user()->id;
-
-        $post->save();
-
-        return redirect('books/1');
+        return $post->image ?? null;
     }
 
     public function addTag(){

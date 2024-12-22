@@ -1,5 +1,5 @@
 <section class="w-full px-10">
-    <h2 class="mt-16 mb-5 text-3xl font-bold">Criar novo post</h2>
+    <h2 class="mt-16 mb-5 text-3xl font-bold">{{isset($post_id) ? "Editar post" : "Criar novo post"}}</h2>
     <form action="" wire:submit="store">
         @csrf
 
@@ -44,6 +44,13 @@
                     </button>
                         <img src="{{ $imageFromWeb['src']['original'] }}" alt="uploaded" class="object-cover">
                     @endif
+
+                    @if($image && !$errors->has('image'))
+                    <button type="button" wire:click="$set('imageFromWeb', null)" class="absolute top-2 right-2 z-10 hover:text-gray-300 text-white p-1">
+                        <ion-icon name="trash-outline" class="text-lg"></ion-icon>
+                    </button>
+                        <img src="{{ $image }}" alt="uploaded" class="object-cover">
+                    @endif
                 </div>
 
                 <div class="flex flex-col items-center justify-center w-full h-80 border-2 border-dashed border-gray-300 rounded-lg bg-gray-50 hover:bg-gray-100 dark:bg-neutral-900 dark:border-neutral-700 dark:hover:bg-neutral-800">
@@ -76,7 +83,7 @@
             <div class="p-6 mt-5 bg-white shadow-md rounded-lg w-full flex flex-row justify-between">
                 <div class="w-5/12">
                     <h3 class="text-xl font-bold mb-2">Categoria</h3>
-                    <select wire:model="categoria" class="select-label" id="">
+                    <select wire:model="categoriaSelecionada" class="select-label" id="">
                         <option selected="" required>Categorias</option>
                         @foreach($categorias as $categoria)
                             <option value="{{$categoria->id}}">{{$categoria->name}}</option>
@@ -89,12 +96,14 @@
                         <input type="text" class="border-0 h-6 w-full py-3 focus:outline-none text-base" wire:keydown.prevent.enter="addTag" wire:model="currentTag" placeholder="Nova tag">
                         <hr>
                         <div class="py-3 px-1.5 min-h-5">
+                            @if($tags)
                             @foreach($tags as $index => $tag)
                             <button type="button" class="py-0.5 px-2 inline-flex items-center mb-1 gap-x-1 text-sm rounded-xl border border-gray-200 bg-white text-gray-800 hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:text-white dark:border-neutral-700 dark:hover:bg-neutral-800">
                                 <ion-icon wire:ignore name="close-outline" wire:click="removeTag({{$index}})"></ion-icon>
                                 {{$tag}}
                             </button>
                             @endforeach
+                            @endif
                         </div>
                     </div>
                     
