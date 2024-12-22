@@ -4,10 +4,10 @@ namespace App\Livewire;
 
 use Livewire\Component;
 use App\Models\Category;
+use App\Models\Post;
 use Livewire\WithPagination;
 use Livewire\Attributes\Url;
 
-use function Laravel\Prompts\alert;
 
 class AdminCategoryList extends Component
 {
@@ -28,8 +28,11 @@ class AdminCategoryList extends Component
         $category = Category::findOrFail($categoryId);
         if($category->name == "Sem categoria" || $category->id === 1){
             session()->flash('error', 'A categoria "Sem categoria" não pode ser deletada.');
-            return;
+            return back();
         }
+
+        Post::where('category_id', $category->id)->update(['category_id' => 1]);
+
         $category->delete();
     }
 

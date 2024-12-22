@@ -25,7 +25,7 @@ class DatabaseSeeder extends Seeder
         // Category::factory()->create([
         //     'name' => 'Sem categoria',
         //     'slug' => 'sem-categoria',
-        //     'color' => 'gray',
+        //     'color' => '#cccccc',
         // ]);
     }
 }
