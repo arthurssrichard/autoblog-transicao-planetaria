@@ -134,7 +134,12 @@ class CreatePost extends Component
     }
 
     public function addTag(){
-        $index = count($this->tags) + 1;
+        if(!$this->tags){
+            $countTags = 0;
+        }else{
+            $countTags = count($this->tags);
+        }
+        $index = $countTags + 1;
         $this->tags[$index] = $this->currentTag;
         $this->reset('currentTag');
     }
