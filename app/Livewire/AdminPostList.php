@@ -25,12 +25,11 @@ class AdminPostList extends Component
     public function delete($postId){
 
         $post = Post::findOrFail($postId);
-
         if($post->audio){
-            Storage::delete($post->audio);
+            Storage::disk('public')->delete($post->audio);
         }
         if($post->imageIsLocal()){
-            Storage::delete($post->image);
+            Storage::disk('public')->delete($post->image);
         }
         
         $post->delete();

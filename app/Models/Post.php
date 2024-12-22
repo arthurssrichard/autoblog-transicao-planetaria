@@ -37,6 +37,6 @@ class Post extends Model
         return  (str_starts_with($this->image, 'https://') ? $this->image : asset('storage/'.$this->image));
     }
     public function imageIsLocal(){
-        return str_starts_with($this->image, '/uploads/images');
+        return str_starts_with($this->image, 'uploads/images');
     }
 }
