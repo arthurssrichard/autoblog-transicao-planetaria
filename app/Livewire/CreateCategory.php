@@ -38,7 +38,7 @@ class CreateCategory extends Component
             Category::create($validated);
         }
 
-        return redirect('/categories');
+        return redirect('/blogadmin/categories');
     }
     public function generateSlug(){
         $this->slug = Str::slug($this->name);

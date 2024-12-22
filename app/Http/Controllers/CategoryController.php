@@ -7,11 +7,14 @@ use App\Models\Category;
 
 class CategoryController extends Controller
 {
+    public function index(){
+        return view("admin.categories.index");
+    }
     public function create(){
-        return view("categories.create");
+        return view("admin.categories.create");
     }
     public function edit($id){
         $category = Category::findOrFail($id);
-        return view("categories.create", ["category"=> $category]);
+        return view("admin.categories.create", ["category"=> $category]);
     }
 }

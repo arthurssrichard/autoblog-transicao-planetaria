@@ -12,6 +12,7 @@ use Intervention\Image\Drivers\Gd\Driver;
 
 /* ADMIN ROUTES */
 // Admin categories routes
+Route::get('/blogadmin/categories',[CategoryController::class,'index']);
 Route::get('/blogadmin/categories/create',[CategoryController::class,'create']);
 Route::get('/blogadmin/categories/{id}/edit',[CategoryController::class,'edit']);
 
