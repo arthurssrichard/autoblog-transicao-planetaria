@@ -6,8 +6,7 @@ use App\Http\Controllers\PostController;
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\TTSController;
 use App\Http\Controllers\CategoryController;
-use Intervention\Image\ImageManager;
-use Intervention\Image\Drivers\Gd\Driver;
+
 
 
 /* ADMIN ROUTES */

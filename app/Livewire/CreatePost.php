@@ -10,7 +10,11 @@ use Livewire\Attributes\Rule;
 use App\Services\PexelsService;
 use Livewire\WithFileUploads;
 use App\Models\Post;
+use App\Services\ImageUtilsService;
 use Illuminate\Support\Facades\Auth;
+use Intervention\Image\ImageManager;
+use Intervention\Image\Drivers\Gd\Driver;
+use Illuminate\Http\UploadedFile;
 
 class CreatePost extends Component
 {
@@ -39,6 +43,8 @@ class CreatePost extends Component
     public $date;
     public $time;
     public $post_id;
+
+    public $testImage;
 
     public function mount($title = '', $slug = '', $mensagem = '', $tags = '', $category_id = null, $date = null, $time = null, $post_id = null){
         $this->title = $title;
@@ -132,6 +138,22 @@ class CreatePost extends Component
         }
         return $post->image ?? null;
     }
+
+
+    
+    public function generateEditedImage()
+    {
+        // Obtém a imagem a ser processada (URL do Pexels ou UploadedFile)
+        $imageSource = $this->imageFromWeb['src']['large'] ?? $this->imageUpload;
+    
+        if (!$imageSource) {
+            return;
+        }
+        
+        $this->testImage = (new ImageUtilsService)->generateEditedImage($imageSource, $this->title);
+    }
+                           
+    
 
     public function addTag(){
         if(!$this->tags){

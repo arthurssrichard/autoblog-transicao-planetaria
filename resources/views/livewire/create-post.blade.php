@@ -18,7 +18,7 @@
                 <x-input.tinymce wire:model="mensagem" placeholder="Type anything you want..." />
             </div>
         </div>
-
+        <button wire:click="generateEditedImage">testar</button>
         <!-- Image insertion or upload box -->
         <div class="p-6 bg-white shadow-md rounded-lg">
             <h3 class="text-2xl font-bold mb-2">Imagem</h3>
@@ -123,5 +123,20 @@
                 </div>
             </div>
         </div>
+
+        <hr>
+
+        <div class="p-6 mt-5 bg-white shadow-md rounded-lg">
+            <h3 class="text-2xl font-bold mb-2">Postagem do Instagram</h3>
+
+            <div class="grid lg:grid-cols-2 lg:gap-6 sm:gap-4 mb-5">
+                @if($testImage)
+                    <img src="{{ $testImage }}" alt="Imagem manipulada">
+                @endif
+            </div>
+        </div>
+
     </form>
+
+
 </section>
