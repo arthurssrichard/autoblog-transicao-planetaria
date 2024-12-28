@@ -12,9 +12,7 @@ use Livewire\WithFileUploads;
 use App\Models\Post;
 use App\Services\ImageUtilsService;
 use Illuminate\Support\Facades\Auth;
-use Intervention\Image\ImageManager;
-use Intervention\Image\Drivers\Gd\Driver;
-use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Str;
 
 class CreatePost extends Component
 {
@@ -43,6 +41,8 @@ class CreatePost extends Component
     public $date;
     public $time;
     public $post_id;
+
+    public $instagramDescription;
 
     public $testImage;
 
@@ -140,9 +140,12 @@ class CreatePost extends Component
     }
 
 
-    
-    public function generateEditedImage()
-    {
+    public function generateInstagramPost(){
+        $this->generateEditedImage();
+        $this->generateEditedDescription();
+    }
+
+    public function generateEditedImage(){
         // Obtém a imagem a ser processada (URL do Pexels ou UploadedFile)
         $imageSource = $this->imageFromWeb['src']['large'] ?? $this->imageUpload;
     
@@ -151,6 +154,11 @@ class CreatePost extends Component
         }
         
         $this->testImage = (new ImageUtilsService)->generateEditedImage($imageSource, $this->title);
+    }
+    public function generateEditedDescription(){
+
+        $content = strip_tags(Str::limit($this->mensagem, 600)) . ' Acesse o link na bio ou do stories para ler o restante da mensagem!';
+        $this->instagramDescription = $content;
     }
                            
     

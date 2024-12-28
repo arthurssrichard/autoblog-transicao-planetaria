@@ -15,7 +15,7 @@
                 <tr>
                     <td>{{$capitulo}}</td>
                     <td>
-                        <form action="/posts/auto-create" method="POST">
+                        <form action="/blogadmin/posts/auto-create" method="POST">
                             @csrf
                             <input type="hidden" name="title" value="{{$capitulo}}">
                             <input type="hidden" name="book_id" value="{{ $book->id }}">

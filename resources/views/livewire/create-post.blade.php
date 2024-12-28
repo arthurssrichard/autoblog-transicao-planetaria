@@ -18,7 +18,7 @@
                 <x-input.tinymce wire:model="mensagem" placeholder="Type anything you want..." />
             </div>
         </div>
-        <button wire:click="generateEditedImage">testar</button>
+        
         <!-- Image insertion or upload box -->
         <div class="p-6 bg-white shadow-md rounded-lg">
             <h3 class="text-2xl font-bold mb-2">Imagem</h3>
@@ -123,19 +123,22 @@
                 </div>
             </div>
         </div>
+        <hr class="my-10">
+        
+        @if(!$testImage)
+        <button wire:click="generateInstagramPost" class="btn-small-play" type="button">
+            <ion-icon class="text-lg" name="logo-instagram" wire:ignore></ion-icon> Gerar postagem do Instagram
+        </button>
+        @endif
 
-        <hr>
-
-        <div class="p-6 mt-5 bg-white shadow-md rounded-lg">
-            <h3 class="text-2xl font-bold mb-2">Postagem do Instagram</h3>
-
-            <div class="grid lg:grid-cols-2 lg:gap-6 sm:gap-4 mb-5">
-                @if($testImage)
-                    <img src="{{ $testImage }}" alt="Imagem manipulada">
-                @endif
+        @if($testImage)
+        <div class="grid lg:grid-cols-2 lg:gap-6 sm:gap-4 mb-5">
+            <div class="p-6 mt-5 bg-white shadow-md rounded-lg">
+                <div class="overflow-hidden mb-3 w-[600px]"><img class="rounded-xl object-cover" src="{{ $testImage }}" alt="Imagem manipulada"></div>
+                <p class="w-[600px]">{{$this->instagramDescription}}</p>
             </div>
         </div>
-
+        @endif
     </form>
 
 

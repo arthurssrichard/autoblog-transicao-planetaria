@@ -9,7 +9,7 @@ use Illuminate\Http\UploadedFile;
 class ImageUtilsService{
     public function generateEditedImage($imageSource, $title)
     {
-    
+        $title = $this->quebraStringEmLinhas($title, 20);
         // Cria o gerenciador de imagens com o driver escolhido
         $manager = new ImageManager(new Driver());
     
@@ -34,7 +34,7 @@ class ImageUtilsService{
         //$image->brightness(-30);
     
         // Redimensiona a imagem
-        $image->cover(1080 / 2, 1350 / 2);
+        $image->cover(600, 600);
     
         // Caminho para o overlay
         $overlayPath = public_path('storage/uploads/images/shadow_overlay.png');
@@ -43,9 +43,9 @@ class ImageUtilsService{
         }
     
         // Adiciona texto à imagem
-        $image->text($title, 270, 500, function ($font) {
+        $image->text($title, 300, 440, function ($font) {
             $font->filename(public_path('storage/fonts/Quicksand-Regular.ttf'));
-            $font->size(36); // Tamanho da fonte
+            $font->size(40); // Tamanho da fonte
             $font->color('#ffffff'); // Cor do texto (branco)
             $font->align('center'); // Alinhamento horizontal
             $font->valign('middle'); // Alinhamento vertical
@@ -62,4 +62,36 @@ class ImageUtilsService{
         return $imageBase64;
     }
 
+    function quebraStringEmLinhas($string, $limite) {
+        // Remove espaços extras
+        $string = trim($string);
+    
+        // Divide a string em palavras
+        $palavras = explode(' ', $string);
+    
+        $linhas = [];
+        $linhaAtual = '';
+    
+        foreach ($palavras as $palavra) {
+            // Verifica se adicionar a palavra ultrapassa o limite
+            if (strlen($linhaAtual . ' ' . $palavra) > $limite) {
+                // Adiciona a linha atual ao array de linhas
+                $linhas[] = trim($linhaAtual);
+                // Reinicia a linha atual com a palavra
+                $linhaAtual = $palavra;
+            } else {
+                // Adiciona a palavra à linha atual
+                $linhaAtual .= ' ' . $palavra;
+            }
+        }
+    
+        // Adiciona a última linha ao array de linhas, se houver conteúdo
+        if (!empty($linhaAtual)) {
+            $linhas[] = trim($linhaAtual);
+        }
+    
+        // Retorna as linhas unidas por quebras de linha
+        return implode("\n", $linhas);
+    }
+    
 }
