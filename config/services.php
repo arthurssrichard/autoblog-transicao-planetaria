@@ -43,5 +43,10 @@ return [
     'groq' => [
         'api_key' => env('GROQ_API_KEY'),
     ],
+    'instagram' => [
+        'access_token' => env('INSTAGRAM_GRAPH_API_KEY'),
+        'user_id' => env('GRAPH_API_TRANSICAOPLANETARIA_USER_ID'),
+        'test_user_id' => env('GRAPH_API_ARTHURRICHARDMOTION_USER_ID')
+    ]
 
 ];
