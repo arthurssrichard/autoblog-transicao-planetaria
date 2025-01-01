@@ -18,7 +18,7 @@
                 <x-input.tinymce wire:model="mensagem" placeholder="Type anything you want..." />
             </div>
         </div>
-        
+
         <!-- Image insertion or upload box -->
         <div class="p-6 bg-white shadow-md rounded-lg">
             <h3 class="text-2xl font-bold mb-2">Imagem</h3>
@@ -35,21 +35,21 @@
                     <button type="button" wire:click="$set('imageUpload', null)" class="absolute top-2 right-2 z-10 hover:text-gray-300 text-white p-1">
                         <ion-icon name="trash-outline" class="text-lg"></ion-icon>
                     </button>
-                        <img src="{{ $imageUpload->temporaryUrl() }}" alt="uploaded" class="object-cover">
+                    <img src="{{ $imageUpload->temporaryUrl() }}" alt="uploaded" class="object-cover">
                     @endif
 
                     @if($imageFromWeb && !$errors->has('imageFromWeb'))
                     <button type="button" wire:click="$set('imageFromWeb', null)" class="absolute top-2 right-2 z-10 hover:text-gray-300 text-white p-1">
                         <ion-icon name="trash-outline" class="text-lg"></ion-icon>
                     </button>
-                        <img src="{{ $imageFromWeb['src']['original'] }}" alt="uploaded" class="object-cover">
+                    <img src="{{ $imageFromWeb['src']['original'] }}" alt="uploaded" class="object-cover">
                     @endif
 
                     @if($image && !$errors->has('image'))
                     <button type="button" wire:click="$set('imageFromWeb', null)" class="absolute top-2 right-2 z-10 hover:text-gray-300 text-white p-1">
                         <ion-icon name="trash-outline" class="text-lg"></ion-icon>
                     </button>
-                        <img src="{{ $image }}" alt="uploaded" class="object-cover">
+                    <img src="{{ $image }}" alt="uploaded" class="object-cover">
                     @endif
                 </div>
 
@@ -78,68 +78,79 @@
             @endif
         </div>
 
-        <div class="grid lg:grid-cols-2 lg:gap-6 sm:gap-4 mb-5">
-
-            <div class="p-6 mt-5 bg-white shadow-md rounded-lg w-full flex flex-row justify-between">
-                <div class="w-5/12">
-                    <h3 class="text-xl font-bold mb-2">Categoria</h3>
-                    <select wire:model="categoriaSelecionada" class="select-label" id="">
-                        <option selected="" required>Categorias</option>
-                        @foreach($categorias as $categoria)
-                            <option value="{{$categoria->id}}">{{$categoria->name}}</option>
-                        @endforeach
-                    </select>
-                </div>
-                <div class="w-6/12">
-                    <h3 class="text-xl font-bold mb-2">Tags</h3>
-                    <div class="border rounded-lg">
-                        <input type="text" class="border-0 h-6 w-full py-3 focus:outline-none text-base" wire:keydown.prevent.enter="addTag" wire:model="currentTag" placeholder="Nova tag">
-                        <hr>
-                        <div class="py-3 px-1.5 min-h-5">
-                            @if($tags)
-                            @foreach($tags as $index => $tag)
-                            <button type="button" class="py-0.5 px-2 inline-flex items-center mb-1 gap-x-1 text-sm rounded-xl border border-gray-200 bg-white text-gray-800 hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:text-white dark:border-neutral-700 dark:hover:bg-neutral-800">
-                                <ion-icon wire:ignore name="close-outline" wire:click="removeTag({{$index}})"></ion-icon>
-                                {{$tag}}
-                            </button>
-                            @endforeach
-                            @endif
-                        </div>
-                    </div>
-                    
-                </div>
-            </div>
-
-            <div class="p-6 mt-5 rounded-lg w-full">
-                <h3 class="text-xl font-bold mb-2">Publicação</h3>
-                <div class="flex flex-row space-x-5">
-                    <div class="flex flex-row space-x-2">
-                        <input type="date"  class="py-2 px-3 block border-gray-200 rounded-lg" wire:model.lazy="date">
-                        <input type="time"  class="py-2 px-3 block border-gray-200 rounded-lg" wire:model.lazy="time">
-                    </div>
-                    <button class="btn-default bg-blue-600 text-white hover:bg-blue-700 focus:bg-blue-700" type="submit">
-                        {{  (strtotime($this->date . ' ' . $this->time) === strtotime(date('Y-m-d H:i'))) ? "Publicar agora" : "Agendar" }}
-                    </button>
-                </div>
-            </div>
-        </div>
         <hr class="my-10">
-        
-        @if(!$testImage)
-        <button wire:click="generateInstagramPost" class="btn-small-play" type="button">
-            <ion-icon class="text-lg" name="logo-instagram" wire:ignore></ion-icon> Gerar postagem do Instagram
-        </button>
-        @endif
 
-        @if($testImage)
         <div class="grid lg:grid-cols-2 lg:gap-6 sm:gap-4 mb-5">
-            <div class="p-6 mt-5 bg-white shadow-md rounded-lg">
-                <div class="overflow-hidden mb-3 w-[600px]"><img class="rounded-xl object-cover" src="{{ $testImage }}" alt="Imagem manipulada"></div>
-                <p class="w-[600px]">{{$this->instagramDescription}}</p>
+            {{--Categorias e publicação--}}
+            <div>
+                <div class="p-6 mt-5 bg-white shadow-md rounded-lg w-full flex flex-row justify-between">
+                    <div class="w-5/12">
+                        <h3 class="text-xl font-bold mb-2">Categoria</h3>
+                        <select wire:model="categoriaSelecionada" class="select-label" id="">
+                            <option selected="" required>Categorias</option>
+                            @foreach($categorias as $categoria)
+                            <option value="{{$categoria->id}}">{{$categoria->name}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="w-6/12">
+                        <h3 class="text-xl font-bold mb-2">Tags</h3>
+                        <div class="border rounded-lg">
+                            <input type="text" class="border-0 h-6 w-full py-3 focus:outline-none text-base" wire:keydown.prevent.enter="addTag" wire:model="currentTag" placeholder="Nova tag">
+                            <hr>
+                            <div class="py-3 px-1.5 min-h-5">
+                                @if($tags)
+                                @foreach($tags as $index => $tag)
+                                <button type="button" class="py-0.5 px-2 inline-flex items-center mb-1 gap-x-1 text-sm rounded-xl border border-gray-200 bg-white text-gray-800 hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:text-white dark:border-neutral-700 dark:hover:bg-neutral-800">
+                                    <ion-icon wire:ignore name="close-outline" wire:click="removeTag({{$index}})"></ion-icon>
+                                    {{$tag}}
+                                </button>
+                                @endforeach
+                                @endif
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="p-6 mt-5 rounded-lg w-full">
+                    <h3 class="text-xl font-bold mb-2">Publicação</h3>
+                    <div class="flex flex-row space-x-5">
+                        <div class="flex flex-row space-x-2 mb-2">
+                            <input type="date" class="py-2 px-3 block border-gray-200 rounded-lg" wire:model.lazy="date">
+                            <input type="time" class="py-2 px-3 block border-gray-200 rounded-lg" wire:model.lazy="time">
+                        </div>
+                        <button class="btn-default bg-blue-600 text-white hover:bg-blue-700 focus:bg-blue-700" type="submit">
+                            {{ (strtotime($this->date . ' ' . $this->time) === strtotime(date('Y-m-d H:i'))) ? "Publicar agora" : "Agendar" }}
+                        </button>
+                    </div>
+                    @if($testImage)
+                    <div class="flex items-center">
+                        <input type="checkbox" id="hs-basic-with-description-unchecked" wire:model="togglePostWithInstagram" class="default-toggle">
+
+                        <label for="hs-basic-with-description-unchecked" class="text-sm text-gray-500 ms-3 dark:text-neutral-400">Publicar também no Instagram</label>
+                    </div>
+                    @endif
+                </div>
+
             </div>
+            @if(!$testImage)
+            <div class="flex flex-row justify-center items-start">
+                <button wire:click="generateInstagramPost" class="btn-small-play" type="button">
+                    <ion-icon class="text-lg" name="logo-instagram" wire:ignore></ion-icon> Gerar postagem do Instagram
+                </button>
+            </div>
+            @endif
+
+            @if($testImage)
+            {{--Post do instagram--}}
+            <div class="p-6 mt-5 bg-white shadow-md rounded-lg">
+                <div class="overflow-hidden mb-3 w-[600px]"><img class="rounded-xl object-cover" src="{{ 'data:image/jpeg;base64,'.$testImage }}" alt="Imagem manipulada"></div>
+                <div class="space-y-3">
+                    <textarea class="py-3 px-4 block w-full bg-gray-100 border-transparent rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-700 dark:border-transparent dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600" placeholder="Descrição do post" wire:model="instagramDescription"></textarea>
+                </div>
+            </div>
+            @endif
         </div>
-        @endif
     </form>
-
-
 </section>

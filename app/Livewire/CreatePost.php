@@ -3,16 +3,21 @@
 namespace App\Livewire;
 
 use Livewire\Component;
-use App\Services\GroqService;
-use App\Http\Controllers\TTSController;
-use App\Models\Category;
 use Livewire\Attributes\Rule;
-use App\Services\PexelsService;
 use Livewire\WithFileUploads;
-use App\Models\Post;
-use App\Services\ImageUtilsService;
+
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
+
+use App\Models\Category;
+use App\Models\Post;
+
+use App\Http\Controllers\TTSController;
+use App\Services\GroqService;
+use App\Services\PexelsService;
+use App\Services\ImageUtilsService;
+use App\Services\InstagramService;
+use App\Services\ImgbbService;
 
 class CreatePost extends Component
 {
@@ -46,6 +51,8 @@ class CreatePost extends Component
 
     public $testImage;
 
+    public $togglePostWithInstagram;
+
     public function mount($title = '', $slug = '', $mensagem = '', $tags = '', $category_id = null, $date = null, $time = null, $post_id = null){
         $this->title = $title;
         $this->slug = $slug;
@@ -55,6 +62,7 @@ class CreatePost extends Component
         $this->date = $date ?? date('Y-m-d');
         $this->time = $time ?? date('H:i');
         $this->post_id = $post_id;
+        $this->togglePostWithInstagram = false;
     }
     
 
@@ -100,6 +108,10 @@ class CreatePost extends Component
     }
 
     public function store(){
+        if($this->togglePostWithInstagram){
+            $this->publishInstagramPost();
+        }
+
         if($this->post_id){
             $post = Post::findOrFail($this->post_id);
         }else{
@@ -124,7 +136,6 @@ class CreatePost extends Component
         $post->user_id = Auth::user()->id;
 
         $post->save();
-
         return redirect('books/1');
     }
 
@@ -155,12 +166,26 @@ class CreatePost extends Component
         
         $this->testImage = (new ImageUtilsService)->generateEditedImage($imageSource, $this->title);
     }
-    public function generateEditedDescription(){
 
+    public function generateEditedDescription(){
         $content = strip_tags(Str::limit($this->mensagem, 600)) . ' Acesse o link na bio ou do stories para ler o restante da mensagem!';
         $this->instagramDescription = $content;
     }
-                           
+
+    public function publishInstagramPost()
+    {
+        $instagramService = new InstagramService;
+        $imgbbService = new ImgbbService;
+        
+        // Gerar um nome único para a imagem
+        $imageName = uniqid('instagram_post_') . '.jpg';
+        $imageUrl = $imgbbService->uploadImage($this->testImage);
+
+        // cria e posta o container
+        $container = $instagramService->createPostContainer($imageUrl, $this->instagramDescription);
+        $instagramService->publishPost($container);
+    }
+                               
     
 
     public function addTag(){

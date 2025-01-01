@@ -53,10 +53,11 @@ class ImageUtilsService{
         });
     
         // Gera a imagem como uma string binária no formato JPEG
-        $imageBinary = (string) $image->toJpeg(80);
+        $imageBinary = $image->toJpeg(80);
     
         // Converte a string binária em Base64
-        $imageBase64 = 'data:image/jpeg;base64,' . base64_encode($imageBinary);
+        //$imageBase64 = 'data:image/jpeg;base64,' . base64_encode($imageBinary);
+        $imageBase64 = base64_encode($imageBinary);
     
         // Atualiza a propriedade Livewire com a imagem codificada
         return $imageBase64;

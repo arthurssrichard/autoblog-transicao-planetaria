@@ -47,6 +47,9 @@ return [
         'access_token' => env('INSTAGRAM_GRAPH_API_KEY'),
         'user_id' => env('GRAPH_API_TRANSICAOPLANETARIA_USER_ID'),
         'test_user_id' => env('GRAPH_API_ARTHURRICHARDMOTION_USER_ID')
+    ],
+    'imgbb' => [
+        'api_key' => env('IMGBB_API_KEY'),
     ]
 
 ];
