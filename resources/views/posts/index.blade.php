@@ -1,7 +1,9 @@
 @extends('layouts.main')
-@section('title','Novo post')
+@section('title','Postagens')
 @section('content')
 <main>
     <livewire:post-list/>
+    @livewireScripts
+    @livewireStyles
 </main>
 @endsection

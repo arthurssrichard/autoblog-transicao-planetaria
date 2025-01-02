@@ -6,7 +6,7 @@
         <!-- Post list -->
         <div class="flex flex-col justify-center items-start w-8/12">
     
-            <div class="flex flex-col space-y-3 pt-10">
+            <div class="flex flex-col space-y-3 w-full pt-10">
     
                 @foreach($posts as $post)
                 @include('livewire/includes/post-card')
@@ -21,11 +21,10 @@
             <div class="w-full">
                <p class="text-base text-gray-600"><ion-icon class="scale-90 translate-y-0.5" name="funnel-outline"></ion-icon> Filtrar por:</p>
             </div>
-    
             <div class="w-full bg-gray-50 p-4 rounded-lg shadow">
                 <label for="hs-select-label" class="block text-sm font-medium mb-2 dark:text-white">Busca</label>
                 <div class="relative">
-                    <input type="text" class="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600 block ps-8 pe-0">
+                    <input type="text" class="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600 block ps-8 pe-0" placeholder="Pesquise algo..." wire:model.live.debounce.300ms="search">
     
                     <div class="absolute inset-y-0 start-0 flex items-center pointer-events-none ps-2 peer-disabled:opacity-50 peer-disabled:pointer-events-none">
                         <ion-icon name="search-outline"></ion-icon>
@@ -35,13 +34,15 @@
     
             <div class="w-full bg-gray-50 p-4 rounded-lg shadow">
                 <label for="hs-select-label" class="block text-sm font-medium mb-2 dark:text-white">Categoria</label>
-                <select id="hs-select-label" class="select-label" name="" id="">
-                    <option class="" selected="">Selecionar</option>
-                    <option value="">Sem categoria</option>
-                    <option value="">Transição planetária</option>
+                <select id="hs-select-label" class="select-label" id="" wire:model.live="category">
+                    <option class="" selected="" value="">Selecionar</option>
+                    @foreach($categories as $category)
+                    <option value="{{$category->slug}}">{{$category->name}}</option>
+                    @endforeach
                 </select>
             </div>
     
+            {{--
             <div class="w-full bg-gray-50 p-4 rounded-lg shadow">
                 <label class="block text-sm font-medium mb-2 dark:text-white">Tags</label>
                 <div class="relative">
@@ -50,16 +51,15 @@
                         <ion-icon name="pricetag-outline"></ion-icon>
                     </div>
                 </div>
-            </div>
+            </div>--}}
     
             <div class="w-full bg-gray-50 p-4 rounded-lg shadow">
                 <label for="hs-select-label" class="block text-sm font-medium mb-2 dark:text-white">Ordenar por</label>
-                <select id="hs-select-label" class="select-label" name="" id="">
-                    <option class="" selected="">Mais recente</option>
-                    <option value="">Mais antigo</option>
+                <select id="hs-select-label" class="select-label" name="" id="" wire:model.live="sort">
+                    <option class="" selected="" value="desc">Mais recente</option>
+                    <option value="asc">Mais antigo</option>
                     <option value="">Curtidas</option>
                 </select>
-    
             </div>
     
             <div class="w-full">

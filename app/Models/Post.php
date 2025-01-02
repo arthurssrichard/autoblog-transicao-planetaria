@@ -39,4 +39,9 @@ class Post extends Model
     public function imageIsLocal(){
         return str_starts_with($this->image, 'uploads/images');
     }
+    public function scopeCategorySlug($query, $slug){
+        return $query->whereHas('category', function ($q) use ($slug){
+            $q->where('slug',$slug);
+        });
+    }
 }
