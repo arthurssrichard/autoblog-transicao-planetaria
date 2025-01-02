@@ -1,4 +1,4 @@
-<div class="bg-white border rounded-xl shadow-sm h-64 flex flex-row w-full">
+<div class="bg-white rounded-xl shadow-sm h-64 flex flex-row w-full dark:bg-neutral-900">
     <div class="h-full w-6/12">
         <img class="size-full object-cover object-center rounded-xl overflow-hidden" src="{{ $post->imagePath }}" alt="{{$post->title}}" alt="Card Image">
     </div>

@@ -1,6 +1,6 @@
-<section class="p-10">
+<section class="p-10 dark:bg-neutral-950">
     <div>
-        <h2 class="text-gray-600 text-6xl font-normal">Postagens</h2>
+        <h2 class="text-gray-600 text-6xl font-normal dark:text-gray-300">Postagens</h2>
     </div>
     <div class="w-full flex flex-row space-x-6">
         <!-- Post list -->
@@ -19,23 +19,23 @@
         <!-- Filter section -->
         <div class="flex flex-col justify-start w-3/12 space-y-3">
             <div class="w-full">
-               <p class="text-base text-gray-600"><ion-icon class="scale-90 translate-y-0.5" name="funnel-outline"></ion-icon> Filtrar por:</p>
+               <p class="text-base text-gray-600 dark:text-gray-400"><ion-icon class="scale-90 translate-y-0.5" name="funnel-outline"></ion-icon> Filtrar por:</p>
             </div>
-            <div class="w-full bg-gray-50 p-4 rounded-lg shadow">
+            <div class="w-full bg-gray-50 p-4 rounded-lg shadow dark:bg-neutral-900">
                 <label for="hs-select-label" class="block text-sm font-medium mb-2 dark:text-white">Busca</label>
                 <div class="relative">
-                    <input type="text" class="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600 block ps-8 pe-0" placeholder="Pesquise algo..." wire:model.live.debounce.300ms="search">
+                    <input type="text" class="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-800 dark:border-neutral-700 dark:text-neutral-100 dark:placeholder-neutral-500 dark:focus:ring-neutral-600 block ps-8 pe-0" placeholder="Pesquise algo..." wire:model.live.debounce.300ms="search">
     
                     <div class="absolute inset-y-0 start-0 flex items-center pointer-events-none ps-2 peer-disabled:opacity-50 peer-disabled:pointer-events-none">
-                        <ion-icon name="search-outline"></ion-icon>
+                        <ion-icon name="search-outline" class="dark:text-neutral-100"></ion-icon>
                     </div>
                 </div>
             </div>
     
-            <div class="w-full bg-gray-50 p-4 rounded-lg shadow">
+            <div class="w-full bg-gray-50 p-4 rounded-lg shadow dark:bg-neutral-900">
                 <label for="hs-select-label" class="block text-sm font-medium mb-2 dark:text-white">Categoria</label>
-                <select id="hs-select-label" class="select-label" id="" wire:model.live="category">
-                    <option class="" selected="" value="">Selecionar</option>
+                <select id="hs-select-label" class="select-label" wire:model.live="category">
+                    <option selected="" value="">Selecionar</option>
                     @foreach($categories as $category)
                     <option value="{{$category->slug}}">{{$category->name}}</option>
                     @endforeach
@@ -43,7 +43,7 @@
             </div>
     
             {{--
-            <div class="w-full bg-gray-50 p-4 rounded-lg shadow">
+            <div class="w-full bg-gray-50 p-4 rounded-lg shadow dark:bg-neutral-900">
                 <label class="block text-sm font-medium mb-2 dark:text-white">Tags</label>
                 <div class="relative">
                     <input type="email" class="peer py-3 pe-0 ps-8 block w-full bg-transparent border-t-transparent border-b-2 border-x-transparent border-b-gray-200 text-sm focus:border-t-transparent focus:border-x-transparent focus:border-b-blue-500 focus:ring-0 disabled:opacity-50 disabled:pointer-events-none dark:border-b-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600 dark:focus:border-b-neutral-600" placeholder="Adicionar tag à busca">
@@ -53,7 +53,7 @@
                 </div>
             </div>--}}
     
-            <div class="w-full bg-gray-50 p-4 rounded-lg shadow">
+            <div class="w-full bg-gray-50 p-4 rounded-lg shadow dark:bg-neutral-900">
                 <label for="hs-select-label" class="block text-sm font-medium mb-2 dark:text-white">Ordenar por</label>
                 <select id="hs-select-label" class="select-label" name="" id="" wire:model.live="sort">
                     <option class="" selected="" value="desc">Mais recente</option>
