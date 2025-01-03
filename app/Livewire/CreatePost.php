@@ -51,6 +51,8 @@ class CreatePost extends Component
 
     public $testImage;
 
+    public $toggleHiddenPost;
+    public $toggleFeaturedPost;
     public $togglePostWithInstagram;
 
     public function mount($title = '', $slug = '', $mensagem = '', $tags = '', $category_id = null, $date = null, $time = null, $post_id = null){
@@ -108,24 +110,22 @@ class CreatePost extends Component
     }
 
     public function store(){
-        if($this->togglePostWithInstagram){
-            $this->publishInstagramPost();
-        }
+        $this->validate();
+        
+        $ttsController = new TTSController();
 
         if($this->post_id){
             $post = Post::findOrFail($this->post_id);
-        }else{
-            $post = new Post();
+        }else{$post = new Post();}
+        if($this->togglePostWithInstagram){
+            $this->publishInstagramPost();
         }
-
-        $ttsController = new TTSController();
-        
-        $this->validate();
-
-        $audio_path = $ttsController->synthesize($this->mensagem, $this->slug);
-        $post->audio = $audio_path;
-
-        $post->image = $this->handleImageUpload($post);   
+        if($this->toggleFeaturedPost){
+            $post->featured = true;
+        }
+        if($this->toggleHiddenPost){
+            $post->hidden = true;
+        }
 
         $post->title = $this->title;
         $post->slug = $this->slug;
@@ -134,6 +134,10 @@ class CreatePost extends Component
         $post->category_id = $this->categoriaSelecionada;
         $post->published_at = $this->date ." ". $this->time;
         $post->user_id = Auth::user()->id;
+
+        $post->image = $this->handleImageUpload($post);  
+        $audio_path = $ttsController->synthesize($this->mensagem, $this->slug);
+        $post->audio = $audio_path;
 
         $post->save();
         return redirect('books/1');

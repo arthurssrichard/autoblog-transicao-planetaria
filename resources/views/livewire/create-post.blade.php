@@ -126,6 +126,14 @@
                                 {{ (strtotime($this->date . ' ' . $this->time) === strtotime(date('Y-m-d H:i'))) ? "Publicar agora" : "Agendar" }}
                             </button>
                         </div>
+                        <div class="flex items-center mt-2">
+                            <input type="checkbox" id="hs-basic-with-description-unchecked" wire:model="toggleFeaturedPost" class="default-toggle">
+                            <label for="hs-basic-with-description-unchecked" class="text-sm text-gray-500 ms-3 dark:text-neutral-400">Post oculto</label>
+                        </div>
+                        <div class="flex items-center mt-2">
+                            <input type="checkbox" id="hs-basic-with-description-unchecked" wire:model="toggleHiddenPost" class="default-toggle">
+                            <label for="hs-basic-with-description-unchecked" class="text-sm text-gray-500 ms-3 dark:text-neutral-400">Post destacado</label>
+                        </div>
                         @if($testImage)
                         <div class="flex items-center mt-2">
                             <input type="checkbox" id="hs-basic-with-description-unchecked" wire:model="togglePostWithInstagram" class="default-toggle">
