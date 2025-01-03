@@ -1,12 +1,19 @@
 <div
-    x-data="{ value: @entangle($attributes->wire('model')) }"
+    x-data="{ 
+    value: @entangle($attributes->wire('model')),
+    isDarkMode: window.matchMedia('(prefers-color-scheme: dark)').matches
+     }"
     x-init="
+        const updateEditorTheme = () => isDarkMode ? 'oxide-dark' : 'oxide';
+
         tinymce.init({
             target: $refs.tinymce,
             themes: 'modern',
             height: 200,
             menubar: false,
             branding: false,
+            skin: updateEditorTheme(),
+            content_css: isDarkMode ? 'dark' : '',
             plugins: [
                 'advlist autolink lists link image charmap print preview anchor',
                 'searchreplace visualblocks code fullscreen',
@@ -42,6 +49,7 @@
 >
     <div>
         <input
+            class="dark:bg-neutral-900"
             x-ref="tinymce"
             type="textarea"
             {{ $attributes->whereDoesntStartWith('wire:model') }}
