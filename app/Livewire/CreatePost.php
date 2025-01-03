@@ -35,7 +35,9 @@ class CreatePost extends Component
     #[Rule('nullable|sometimes|image')]
     public $imageUpload;
 
+    #[Rule('required')]
     public $categoriaSelecionada;
+
     public $imageFromWeb;
     public $image;
     public $consulta;
@@ -111,7 +113,7 @@ class CreatePost extends Component
 
     public function store(){
         $this->validate();
-        
+
         $ttsController = new TTSController();
 
         if($this->post_id){

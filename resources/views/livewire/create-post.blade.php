@@ -8,14 +8,23 @@
                 <div>
                     <label for="title" class="block text-sm font-medium mb-2 dark:text-white">Título</label>
                     <input type="text" class="text-input-default" wire:model="title" placeholder="Digite o título">
+                    @error('title')
+                    <span class="text-red-600">{!!$message!!}</span>
+                    @enderror
                 </div>
                 <div>
                     <label for="slug" class="block text-sm font-medium mb-2 dark:text-white">Slug</label>
                     <input type="text" name="slug" id="slug" class="text-input-default" wire:model="slug" placeholder="Digite o slug">
+                    @error('slug')
+                    <span class="text-red-600">{!!$message!!}</span>
+                    @enderror
                 </div>
             </div>
             <div>
                 <x-input.tinymce wire:model="mensagem" placeholder="Type anything you want..." />
+                @error('mensagem')
+                <span class="text-red-600">{!!$message!!}</span>
+                @enderror
             </div>
         </div>
 
@@ -92,6 +101,9 @@
                             <option value="{{$categoria->id}}">{{$categoria->name}}</option>
                             @endforeach
                         </select>
+                        @error('categoriaSelecionada')
+                        <span class="text-red-600">{!!$message!!}</span>
+                        @enderror
                     </div>
                     <div class="w-full">
                         <h3 class="text-xl font-bold mb-2 dark:text-neutral-300">Tags</h3>
