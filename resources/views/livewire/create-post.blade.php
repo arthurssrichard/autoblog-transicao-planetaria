@@ -1,4 +1,4 @@
-<section class="w-full px-10 py-16 dark:bg-neutral-900">
+<section class="w-full px-10 py-16">
     <h2 class="mb-5 text-3xl font-bold dark:text-neutral-300">{{isset($post_id) ? "Editar post" : "Criar novo post"}}</h2>
     <form action="" wire:submit="store">
         @csrf

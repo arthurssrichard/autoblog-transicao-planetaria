@@ -9,7 +9,7 @@
     @vite('resources/css/app.css')
 </head>
 
-<body class="font-light antialiased">
+<body class="font-light antialiased dark:bg-neutral-900">
     <header class="flex items-center justify-between py-3 px-6 border-b border-gray-100">
         <div id="header-left" class="flex items-center">
             <div class="text-gray-800 font-semibold">
