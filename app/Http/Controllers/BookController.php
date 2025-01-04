@@ -36,6 +36,6 @@ class BookController extends Controller
         $book = Book::findOrFail($id);
         $capitulos = (new PdfService)->capitulos($book);
 
-        return view("books.show",["capitulos"=>$capitulos, "book"=>$book]);
+        return view("admin.books.show",["capitulos"=>$capitulos, "book"=>$book]);
     }
 }
