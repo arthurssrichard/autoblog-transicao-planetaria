@@ -9,7 +9,7 @@ use App\Services\PdfService;
 class BookController extends Controller
 {
     public function create(){
-        return view("books.create");
+        return view("admin.books.create");
     }
 
     public function store(Request $request){
