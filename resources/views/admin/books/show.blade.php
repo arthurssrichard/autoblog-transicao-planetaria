@@ -7,7 +7,8 @@
         <h2 class="text-3xl font-bold text-yellow-900 dark:text-neutral-300">Capítulos do Livro</h2>
         <p class="text-gray-500 dark:text-neutral-400">Selecione um capítulo para gerar uma postagem automaticamente.</p>
     </div>
-
+    <button x-data x-on:click="$dispatch('open-modal')" class="btn-small-blue mb-2">Auto-gerar capítulo especifico</button>
+    <x-specific-auto-create bookId="{{$book->id}}"></x-specific-auto-create>
     <!-- Tabela de Capítulos -->
     <div class="bg-white shadow-md rounded-lg dark:bg-neutral-800 overflow-hidden w-full sm:w-8/12">
         <table class="min-w-full divide-y divide-gray-200 dark:divide-neutral-700">
@@ -44,4 +45,5 @@
         </table>
     </div>
 </main>
+<script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 @endsection

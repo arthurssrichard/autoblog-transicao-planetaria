@@ -138,8 +138,8 @@ class CreatePost extends Component
         $post->user_id = Auth::user()->id;
 
         $post->image = $this->handleImageUpload($post);  
-        $audio_path = $ttsController->synthesize($this->mensagem, $this->slug);
-        $post->audio = $audio_path;
+        // $audio_path = $ttsController->synthesize($this->mensagem, $this->slug);
+        // $post->audio = $audio_path;
 
         $post->save();
         return redirect('books/1');

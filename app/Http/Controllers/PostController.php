@@ -35,6 +35,21 @@ class PostController extends Controller
         return view('admin.posts.create',['title' => $title, 'slug'=>$slug, 'mensagem'=>$mensagem]);
     }
 
+    public function specificAutoCreate(Request $request){
+        $pdfService = new PdfService;
+
+        $title = $request->input('title');
+        $bookId = $request->input('book_id');
+        $slug = Str::slug($title);
+        $book = Book::findOrFail($bookId);
+
+        $pgInicial = $request->input('pg-inicial');
+        $pgFinal = $request->input('pg-final');
+
+        $mensagem = $pdfService->exibirMensagemEspecifica($title, $pgInicial, $pgFinal, $book);
+        dd($mensagem);
+    }
+
     public function create(){
         return view('admin.posts.create',[
             'title' => '',

@@ -20,6 +20,7 @@ Route::get('/blogadmin/posts',[PostController::class,'indexAdmin']);
 Route::get('/blogadmin/posts/create',[PostController::class, 'create']);
 Route::get('/blogadmin/posts/{id}/edit',[PostController::class, 'edit']);
 Route::post('/blogadmin/posts/auto-create',[PostController::class,'autoCreate']);
+Route::post('/blogadmin/posts/specific-auto-create',[PostController::class,'specificAutoCreate']);
 Route::post('/blogadmin/posts',[PostController::class, 'store']);
 
 // Admin books routes

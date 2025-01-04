@@ -104,6 +104,27 @@ class PdfService
             return $rawMessage;
         }
     }
+
+    function exibirMensagemEspecifica(String $title, $pgInicial, $pgFinal, Book $book){
+        $pdf = $this->pdf($book);
+
+
+        $pages = range($pgInicial, $pgFinal);
+        $content = '';
+        foreach($pages as $page){
+            $content .= $pdf->getPages()[$page-1]->getText();
+        }
+
+        $content = preg_replace("/([A-Z]+)\s\s\s([A-Z]+)/", "$1 $2",$content);
+        $escapedTitle = strtoupper($title);
+        $escapedTitle = preg_replace('/\s+/','\\s*',$escapedTitle);
+
+        $pattern2 = "/($escapedTitle.*?)(?=\d+\.\s|$|\.{4,})/siu";
+        if(preg_match($pattern2,$content,$matches)){
+            $rawMessage = $matches[1];
+            return $rawMessage;
+        }
+    }
     
     function formatarMensagem(String $mensagem, String $title, Book $book){
         // pegar paginas
