@@ -1,16 +1,16 @@
-<section class="w-full px-10">
-    <h2 class="mt-16 mb-5 text-3xl font-bold">{{$categoryId ? "Editar categoria '$name'" : "Criar nova categoria"}}</h2>
+<section class="w-full px-10 py-16">
+    <h2 class="mb-5 text-3xl font-bold dark:text-neutral-300">{{$categoryId ? "Editar categoria '$name'" : "Criar nova categoria"}}</h2>
     <form wire:submit="submit">
         @csrf
-        <div class="p-6 bg-white shadow-md rounded-lg mb-10">
-            <div class="grid lg:grid-cols-3 lg:gap-6 sm:gap-4 mb-5">
+        <div class="p-6 bg-white dark:bg-neutral-800 shadow-md rounded-lg mb-10">
+            <div class="grid lg:grid-cols-3 gap-6 mb-5">
                 <div>
                     <label for="name" class="block text-sm font-medium mb-2 dark:text-white">Nome</label>
-                    <input type="text" class="text-input-default" wire:model="name" wire:keyup="generateSlug" id="name">
+                    <input type="text" class="text-input-default" wire:model="name" wire:keyup="generateSlug" id="name" placeholder="Nome da categoria">
                 </div>
                 <div>
                     <label for="slug" class="block text-sm font-medium mb-2 dark:text-white">Slug</label>
-                    <input type="text" id="slug" class="text-input-default" wire:model="slug">
+                    <input type="text" id="slug" class="text-input-default" wire:model="slug" placeholder="slug-da-categoria">
                 </div>
                 <div class="flex flex-row space-x-10 items-end">
                     <div>
