@@ -30,7 +30,7 @@ class PostController extends Controller
         $book = Book::findOrFail($bookId);
 
         $mensagem = (new PdfService)->exibirMensagem($title,$book);
-        $mensagem = (new PdfService)->formatarMensagem($mensagem, $title, $book);
+        //$mensagem = (new PdfService)->formatarMensagem($mensagem, $title, $book);
 
         return view('admin.posts.create',['title' => $title, 'slug'=>$slug, 'mensagem'=>$mensagem]);
     }
@@ -47,7 +47,7 @@ class PostController extends Controller
         $pgFinal = $request->input('pg-final');
 
         $mensagem = $pdfService->exibirMensagemEspecifica($title, $pgInicial, $pgFinal, $book);
-        dd($mensagem);
+        return view('admin.posts.create',['title' => $title, 'slug'=>$slug, 'mensagem'=>$mensagem]);
     }
 
     public function create(){

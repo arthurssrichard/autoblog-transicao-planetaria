@@ -95,19 +95,20 @@ class PdfService
         }
 
         $content = preg_replace("/([A-Z]+)\s\s\s([A-Z]+)/", "$1 $2",$content);
-        $escapedTitle = strtoupper($title);
+        $escapedTitle = mb_strtoupper($title);
         $escapedTitle = preg_replace('/\s+/','\\s*',$escapedTitle);
 
         $pattern2 = "/($escapedTitle.*?)(?=\d+\.\s|$|\.{4,})/siu";
         if(preg_match($pattern2,$content,$matches)){
             $rawMessage = $matches[1];
-            return $rawMessage;
         }
+        $formatedMessage = $this->formatarMensagem($rawMessage, $escapedTitle, $pages);
+
+        return $formatedMessage;
     }
 
     function exibirMensagemEspecifica(String $title, $pgInicial, $pgFinal, Book $book){
         $pdf = $this->pdf($book);
-
 
         $pages = range($pgInicial, $pgFinal);
         $content = '';
@@ -116,25 +117,20 @@ class PdfService
         }
 
         $content = preg_replace("/([A-Z]+)\s\s\s([A-Z]+)/", "$1 $2",$content);
-        $escapedTitle = strtoupper($title);
+        $escapedTitle = mb_strtoupper($title);
         $escapedTitle = preg_replace('/\s+/','\\s*',$escapedTitle);
 
         $pattern2 = "/($escapedTitle.*?)(?=\d+\.\s|$|\.{4,})/siu";
         if(preg_match($pattern2,$content,$matches)){
             $rawMessage = $matches[1];
-            return $rawMessage;
         }
+        
+        return $this->formatarMensagem($rawMessage, $escapedTitle, $pages);
     }
     
-    function formatarMensagem(String $mensagem, String $title, Book $book){
-        // pegar paginas
-        $index = $this->indice($book);
-        $pages = $this->getPagesMessage($title, $index);
-        //dd($pages);
+    function formatarMensagem(String $mensagem, String $title, $pages){
 
         // retirar titulo
-        $title = mb_strtoupper($title);
-        $title = preg_quote($title,'/');
         $pattern = "/$title/";
         $mensagem = preg_replace($pattern,'',$mensagem);
 
