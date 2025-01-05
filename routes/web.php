@@ -7,29 +7,26 @@ use App\Http\Controllers\BookController;
 use App\Http\Controllers\TTSController;
 use App\Http\Controllers\CategoryController;
 
-
-
 /* ADMIN ROUTES */
-// Admin categories routes
-Route::get('/blogadmin/categories',[CategoryController::class,'index']);
-Route::get('/blogadmin/categories/create',[CategoryController::class,'create']);
-Route::get('/blogadmin/categories/{id}/edit',[CategoryController::class,'edit']);
+Route::middleware(['is_admin'])->group(function (){
+    // Categories routes
+    Route::get('/blogadmin/categories',[CategoryController::class,'index']);
+    Route::get('/blogadmin/categories/create',[CategoryController::class,'create']);
+    Route::get('/blogadmin/categories/{id}/edit',[CategoryController::class,'edit']);
 
-// Admin posts routes
-Route::get('/blogadmin/posts',[PostController::class,'indexAdmin']);
-Route::get('/blogadmin/posts/create',[PostController::class, 'create']);
-Route::get('/blogadmin/posts/{id}/edit',[PostController::class, 'edit']);
-Route::post('/blogadmin/posts/auto-create',[PostController::class,'autoCreate']);
-Route::post('/blogadmin/posts/specific-auto-create',[PostController::class,'specificAutoCreate']);
-Route::post('/blogadmin/posts',[PostController::class, 'store']);
+    // Posts routes
+    Route::get('/blogadmin/posts',[PostController::class,'indexAdmin']);
+    Route::get('/blogadmin/posts/create',[PostController::class, 'create']);
+    Route::get('/blogadmin/posts/{id}/edit',[PostController::class, 'edit']);
+    Route::post('/blogadmin/posts/auto-create',[PostController::class,'autoCreate']);
+    Route::post('/blogadmin/posts/specific-auto-create',[PostController::class,'specificAutoCreate']);
+    Route::post('/blogadmin/posts',[PostController::class, 'store']);
 
-// Admin books routes
-Route::get('/blogadmin/books/create',[BookController::class, 'create']);
-Route::post('/blogadmin/books',[BookController::class, 'store']);
-Route::get('/blogadmin/books/{id}',[BookController::class, 'show']);
-
-
-
+    // Books routes
+    Route::get('/blogadmin/books/create',[BookController::class, 'create']);
+    Route::post('/blogadmin/books',[BookController::class, 'store']);
+    Route::get('/blogadmin/books/{id}',[BookController::class, 'show']);
+});
 
 /* PUBLIC ROUTES */
 // Post routes
@@ -39,7 +36,6 @@ Route::get('/posts',[PostController::class,'index']);
 // General routes
 Route::get('/', [HomeController::class, 'index']);
 Route::post('/tts/synthesize', [TTSController::class, 'synthesize']);
-
 
 Route::middleware([
     'auth:sanctum',
