@@ -25,6 +25,8 @@ class PostFactory extends Factory
             'body' => $this->faker->paragraph(10),
             'tags' => $this->faker->words($nb= 3),
             'published_at' => $this->faker->dateTimeBetween('-1 Week', '+1 Week'),
+            'hidden' => $this->faker->boolean(),
+            'featured' => $this->faker->boolean(),
         ];
     }
 }

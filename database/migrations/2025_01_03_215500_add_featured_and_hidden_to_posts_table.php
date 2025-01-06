@@ -12,8 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('posts', function (Blueprint $table) {
-            $table->boolean('hidden');
-            $table->boolean('featured');
+            $table->boolean('hidden')->default(false);
+            $table->boolean('featured')->default(false);
         });
     }
 
