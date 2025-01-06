@@ -10,8 +10,8 @@
                 @foreach($featuredPosts as $post)
                 <div class="md:col-span-1 col-span-3">
                     <a href="/posts/{{$post->slug}}">
-                        <div>
-                            <img class="w-full rounded-xl" src="{{$post->image}}">
+                        <div class="h-72 max-w-96 flex flex-row z-10 justify-center items-center">
+                            <img class="rounded-lg w-full h-full object-cover" src="{{$post->image}}">
                         </div>
                     </a>
                     <div class="mt-3">
@@ -37,8 +37,8 @@
                 @foreach($posts as $post)
                 <div class="md:col-span-1 col-span-3">
                     <a href="/posts/{{$post->slug}}">
-                        <div>
-                            <img class="w-full rounded-xl" src="{{$post->image}}">
+                        <div class="h-72 max-w-96 flex flex-row z-10 justify-center items-center">
+                            <img class="rounded-lg w-full h-full object-cover" src="{{$post->image}}">
                         </div>
                     </a>
                     <div class="mt-3">
