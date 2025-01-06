@@ -23,6 +23,7 @@ Route::middleware(['is_admin'])->group(function (){
     Route::post('/blogadmin/posts',[PostController::class, 'store']);
 
     // Books routes
+    Route::get('/blogadmin/books',[BookController::class, 'index']);
     Route::get('/blogadmin/books/create',[BookController::class, 'create']);
     Route::post('/blogadmin/books',[BookController::class, 'store']);
     Route::get('/blogadmin/books/{id}',[BookController::class, 'show']);

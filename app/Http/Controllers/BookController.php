@@ -8,6 +8,11 @@ use App\Services\PdfService;
 
 class BookController extends Controller
 {
+    public function index(){
+        $books = Book::all();
+        return view("admin.books.index", ['books'=> $books]);
+    }
+
     public function create(){
         return view("admin.books.create");
     }
@@ -29,7 +34,7 @@ class BookController extends Controller
         }
         
         $book->save();
-        return redirect('/books/create');
+        return redirect('/books');
     }
 
     public function show($id){
