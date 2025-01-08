@@ -6,6 +6,7 @@ use App\Http\Controllers\PostController;
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\TTSController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\ImageController;
 
 /* ADMIN ROUTES */
 Route::middleware(['is_admin'])->group(function (){
@@ -37,6 +38,8 @@ Route::get('/posts',[PostController::class,'index']);
 // General routes
 Route::get('/', [HomeController::class, 'index']);
 Route::post('/tts/synthesize', [TTSController::class, 'synthesize']);
+
+Route::get('/optimized-image/{filename}',[ImageController::class, 'optimizedImage']);
 
 Route::middleware([
     'auth:sanctum',

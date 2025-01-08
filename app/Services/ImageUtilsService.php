@@ -37,7 +37,7 @@ class ImageUtilsService{
         $image->cover(600, 600);
     
         // Caminho para o overlay
-        $overlayPath = public_path('storage/uploads/images/shadow_overlay.png');
+        $overlayPath = public_path('storage/uploads/assetImages/shadow_overlay.png');
         if (file_exists($overlayPath)) {
             $image->place($overlayPath, 'bottom-right', 0, 0, 100);
         }
