@@ -17,7 +17,7 @@
                 <ion-icon name="close-outline" class="text-4xl text-neutral-300"></ion-icon>
             </button>
         </div>
-
+ 
         <!-- Navigation Links -->
         <div class="flex flex-col items-start justify-start flex-grow">
             <ul class="text-start w-full">

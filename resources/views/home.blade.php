@@ -5,7 +5,7 @@
     <section class="mb-10">
         <h2 class="mt-16 mb-5 text-3xl text-teal-500 font-bold">Posts destacados</h2>
         <div class="w-full mb-5">
-            <div class="grid grid-cols-3 gap-10 gap-y-32 w-full">
+            <div class="grid grid-cols-3 gap-10 gap-y-20 w-full">
                 {{-- post card --}}
                 @foreach($featuredPosts as $post)
                 <div class="md:col-span-1 col-span-3">
