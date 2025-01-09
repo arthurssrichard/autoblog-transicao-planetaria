@@ -39,6 +39,13 @@ Route::get('/posts',[PostController::class,'index']);
 
 // General routes
 Route::get('/', [HomeController::class, 'index']);
+Route::get('/sobre-nos', [HomeController::class, 'sobreNos']);
+Route::get('/contato', [HomeController::class, 'contato']);
+Route::get('/introducao', [HomeController::class, 'introducao']);
+Route::get('/politica-de-privacidade', [HomeController::class, 'politica-de-privacidade']);
+Route::get('/termos-de-uso', [HomeController::class, 'termos-de-uso']);
+
+
 Route::post('/tts/synthesize', [TTSController::class, 'synthesize']);
 
 Route::get('/optimized-image/{filename}',[ImageController::class, 'optimizedImage']);

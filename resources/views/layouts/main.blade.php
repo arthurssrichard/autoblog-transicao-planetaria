@@ -9,7 +9,7 @@
     @vite('resources/css/app.css')
 </head>
 
-<body class="font-light antialiased dark:bg-neutral-900">
+<body class="font-light antialiased dark:bg-neutral-900 h-screen flex flex-col">
     <livewire:partials.public-header>
     @yield('content')
     <footer class="text-sm border-t border-gray-100 dark:border-gray-700 dark:bg-neutral-950">

@@ -13,6 +13,9 @@ class HomeController extends Controller
         $featuredPosts = Post::orderBy('published_at','desc')->where('featured',1)->get();
         return view('home',['posts' => $posts, 'featuredPosts' => $featuredPosts]);
     }
+    public function sobreNos(){
+        return view('sobre-nos');
+    }
 
 
 
