@@ -54,7 +54,7 @@
                 @endforeach
             </div>
             <div class="py-3 flex justify-center">
-                <a href="/posts"><button class="btn-small-blue">LER MAIS</button></a>
+                <a href="/posts" wire:navigate><button class="btn-small-blue">LER MAIS</button></a>
             </div>
         </div>
     </section>

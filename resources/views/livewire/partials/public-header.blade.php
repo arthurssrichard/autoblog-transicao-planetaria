@@ -3,12 +3,14 @@
 
             {{-- terminar controles de mostrar/esconder menu com o mesmo conceito do modal com alpinejs --}}
             <div class="text-gray-800 font-semibold w-6/12 sm:w-32">
-                <img 
-                class="w-full" 
-                x-data="{ isDark: window.matchMedia('(prefers-color-scheme: dark)').matches }"
-                x-init="window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => isDark = e.matches)"
-                :src="isDark ? '/optimized-image/logo-dark.png' : '/optimized-image/logo.png'" 
-                alt="logo">
+                <a href="/" wire:navigate>
+                    <img
+                    class="w-full"
+                    x-data="{ isDark: window.matchMedia('(prefers-color-scheme: dark)').matches }"
+                    x-init="window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => isDark = e.matches)"
+                    :src="isDark ? '/optimized-image/logo-dark.png' : '/optimized-image/logo.png'"
+                    alt="logo">
+                </a>
             </div>
             <x-public-header-mobile></x-public-header-mobile>
             <div class="w-6/12 sm:w-6/12 flex justify-end">

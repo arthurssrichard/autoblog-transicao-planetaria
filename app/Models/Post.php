@@ -26,8 +26,9 @@ class Post extends Model
     
     public function getExcerpt($words)
     {
-        return Str::limit($this->body, $words);
+        return strip_tags(Str::limit(html_entity_decode($this->body), $words));
     }
+    
     
     public function category()
     {

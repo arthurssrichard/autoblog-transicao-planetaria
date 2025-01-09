@@ -5,6 +5,7 @@
     x-on:close-header-mobile.window="show = false"
     x-on:keydown.escape.window="show = false"
     x-transition.opacity.duration.300ms
+    x-cloak
     class="fixed inset-0 z-50 bg-white dark:bg-neutral-900"
 >
     <div class="flex flex-col w-full h-full">

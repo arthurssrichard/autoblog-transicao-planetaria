@@ -2,10 +2,9 @@
     <div>
         <h2 class="text-gray-600 text-6xl font-normal dark:text-gray-300">Postagens</h2>
     </div>
-    <div class="w-full flex flex-row space-x-6">
+    <div class="w-full flex flex-col-reverse sm:flex-row gap-x-6">
         <!-- Post list -->
-        <div class="flex flex-col justify-center items-start w-8/12">
-    
+        <div class="flex flex-col justify-center items-start w-full sm:w-8/12">
             <div class="flex flex-col space-y-3 w-full pt-10">
     
                 @foreach($posts as $post)
@@ -17,7 +16,7 @@
             </div>
         </div>
         <!-- Filter section -->
-        <div class="flex flex-col justify-start w-3/12 space-y-3">
+        <div class="flex flex-col justify-start w-full sm:w-3/12 gap-y-3 gap-x-2">
             <div class="w-full">
                <p class="text-base text-gray-600 dark:text-gray-400"><ion-icon class="scale-90 translate-y-0.5" name="funnel-outline"></ion-icon> Filtrar por:</p>
             </div>
@@ -32,16 +31,26 @@
                 </div>
             </div>
     
-            <div class="w-full bg-gray-50 p-4 rounded-lg shadow dark:bg-neutral-900">
-                <label for="hs-select-label" class="block text-sm font-medium mb-2 dark:text-white">Categoria</label>
-                <select id="hs-select-label" class="select-label" wire:model.live="category">
-                    <option selected="" value="">Selecionar</option>
-                    @foreach($categories as $category)
-                    <option value="{{$category->slug}}">{{$category->name}}</option>
-                    @endforeach
-                </select>
+            <div class="grid grid-cols-2 sm:grid sm:grid-cols-1 gap-4">
+                <div class="w-full bg-gray-50 p-4 rounded-lg shadow dark:bg-neutral-900">
+                    <label for="hs-select-label" class="block text-sm font-medium mb-2 dark:text-white">Categoria</label>
+                    <select id="hs-select-label" class="select-label" wire:model.live="category">
+                        <option selected="" value="">Selecionar</option>
+                        @foreach($categories as $category)
+                        <option value="{{$category->slug}}">{{$category->name}}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="w-full bg-gray-50 p-4 rounded-lg shadow dark:bg-neutral-900">
+                    <label for="hs-select-label" class="block text-sm font-medium mb-2 dark:text-white">Ordenar por</label>
+                    <select id="hs-select-label" class="select-label" name="" id="" wire:model.live="sort">
+                        <option class="" selected="" value="desc">Mais recente</option>
+                        <option value="asc">Mais antigo</option>
+                        <option value="">Curtidas</option>
+                    </select>
+                </div>
             </div>
-    
+
             {{--
             <div class="w-full bg-gray-50 p-4 rounded-lg shadow dark:bg-neutral-900">
                 <label class="block text-sm font-medium mb-2 dark:text-white">Tags</label>
@@ -53,14 +62,6 @@
                 </div>
             </div>--}}
     
-            <div class="w-full bg-gray-50 p-4 rounded-lg shadow dark:bg-neutral-900">
-                <label for="hs-select-label" class="block text-sm font-medium mb-2 dark:text-white">Ordenar por</label>
-                <select id="hs-select-label" class="select-label" name="" id="" wire:model.live="sort">
-                    <option class="" selected="" value="desc">Mais recente</option>
-                    <option value="asc">Mais antigo</option>
-                    <option value="">Curtidas</option>
-                </select>
-            </div>
     
             <div class="w-full">
                 <div class="flex items-center pl-5">
