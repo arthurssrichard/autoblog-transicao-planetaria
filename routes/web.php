@@ -10,6 +10,8 @@ use App\Http\Controllers\ImageController;
 
 /* ADMIN ROUTES */
 Route::middleware(['is_admin'])->group(function (){
+    Route::redirect('/blogadmin','/blogadmin/posts');
+
     // Categories routes
     Route::get('/blogadmin/categories',[CategoryController::class,'index']);
     Route::get('/blogadmin/categories/create',[CategoryController::class,'create']);

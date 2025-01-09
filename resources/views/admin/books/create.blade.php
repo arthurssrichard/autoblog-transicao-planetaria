@@ -1,4 +1,4 @@
-@extends('layouts.main')
+@extends('layouts.admin')
 @section('title', 'Novo livro')
 @section('content')
 <main class="w-full px-10 py-16">
