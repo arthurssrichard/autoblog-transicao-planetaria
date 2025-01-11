@@ -1,58 +1,42 @@
 <div
-    x-data="{ 
-    value: @entangle($attributes->wire('model')),
-    isDarkMode: window.matchMedia('(prefers-color-scheme: dark)').matches
-     }"
+    x-data="{ value: @entangle($attributes->wire('model')) }"
     x-init="
+        const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
         const updateEditorTheme = () => isDarkMode ? 'oxide-dark' : 'oxide';
 
         tinymce.init({
             target: $refs.tinymce,
+            skin: updateEditorTheme(),
+            content_css: isDarkMode ? 'dark' : '',
             themes: 'modern',
             height: 200,
             menubar: false,
             branding: false,
-            skin: updateEditorTheme(),
-            content_css: isDarkMode ? 'dark' : '',
-            plugins: [
-                'advlist autolink lists link image charmap print preview anchor',
-                'searchreplace visualblocks code fullscreen',
-                'insertdatetime media table paste code help wordcount'
-            ],
-            toolbar: 'undo redo | formatselect | ' +
-                'bold italic backcolor | alignleft aligncenter ' +
-                'alignright alignjustify | bullist numlist outdent indent | ' +
-                'removeformat | help',
             setup: function(editor) {
+                
                 editor.on('blur', function(e) {
-                    value = editor.getContent()
-                })
-                editor.on('init', function (e) {
-                    if (value != null) {
-                        editor.setContent(value)
-                    }
-                })
-                function putCursorToEnd() {
-                    editor.selection.select(editor.getBody(), true);
-                    editor.selection.collapse(false);
+                    value = editor.getContent();
+                });
+
+                editor.on('init', function(e) {
+                if(value !== null   ){
+                    editor.setContent(value);
                 }
-                $watch('value', function (newValue) {
+                });
+
+                
+                $watch('value', function(newValue) {
                     if (newValue !== editor.getContent()) {
-                        editor.resetContent(newValue || '');
-                        putCursorToEnd();
+                        editor.setContent(newValue || '');
                     }
                 });
             }
-        })
+        });
     "
-    wire:ignore
->
+    wire:ignore>
     <div>
-        <input
-            class="dark:bg-neutral-900"
+        <textarea
             x-ref="tinymce"
-            type="textarea"
-            {{ $attributes->whereDoesntStartWith('wire:model') }}
-        >
+            {{ $attributes->whereDoesntStartWith('wire:model') }}></textarea>
     </div>
 </div>

@@ -21,7 +21,9 @@
                 </div>
             </div>
             <div>
-                <x-input.tinymce wire:model="mensagem" placeholder="Type anything you want..." />
+                <div wire:ignore>
+                    <x-input.tinymce wire:model="mensagem" id="menubar" placeholder="Type anything you want..." />
+                </div>
                 @error('mensagem')
                 <span class="text-red-600">{!!$message!!}</span>
                 @enderror

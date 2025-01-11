@@ -178,6 +178,7 @@ class CreatePost extends Component
         $this->instagramDescription = $content;
     }
 
+
     public function publishInstagramPost()
     {
         $instagramService = new InstagramService;
