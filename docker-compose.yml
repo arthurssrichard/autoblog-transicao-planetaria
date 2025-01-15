@@ -1,0 +1,38 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: always
+    networks:
+      - docker-network
+    ports:
+      - 80:80
+    depends_on:
+      - db
+    command: >
+      sh -c "php artisan migrate --force &&
+             apache2-foreground"
+
+  db:
+    image: mysql:5.7
+    platform: linux/amd64
+    ports:
+      - 3306:3306
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${DB_DATABASE}
+      MYSQL_USER: ${DB_USERNAME}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+    networks:
+      - docker-network
+    volumes:
+      - db:/var/lib/mysql
+
+volumes:
+  db:
+
+networks:
+  docker-network:
+    driver: bridge
