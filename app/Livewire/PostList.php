@@ -12,14 +12,17 @@ class PostList extends Component
 {
     use WithPagination;
 
-    #[Url()]
+    #[Url(as: 'pesquisa', history: true)]
     public $search = '';
 
-    #[Url()]
+    #[Url(as: 'ordem', history: true)]
     public $sort = 'desc';
 
-    #[Url()]
-    public $category = '';
+    #[Url(as: 'categoria', history: true)]
+    public $category = null;
+
+    #[Url(as: 'destacados', history: true)]
+    public $featured;
 
     public function updatedSearch(){
         $this->resetPage(); 
@@ -31,11 +34,14 @@ class PostList extends Component
     public function render()
     {
         $posts = Post::orderBy('published_at',$this->sort)
-        ->when(Category::where('slug',$this->category)->first(), function($query){
-            $query->categorySlug($this->category);
-        })
+                    ->when(Category::where('slug',$this->category)->first(), function($query){
+                        $query->categorySlug($this->category);
+                    })
+                    ->when($this->featured, function ($query){
+                        return $query->where('featured',true);
+                    })
                     ->where('title','like',"%{$this->search}%")
-                    ->paginate(3);
+                    ->paginate(8);
         $categories = Category::all();
         return view('livewire.post-list',['posts'=>$posts, 'categories' => $categories]);
     }

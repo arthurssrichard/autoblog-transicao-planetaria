@@ -18,7 +18,7 @@
         <!-- Filter section -->
         <div class="flex flex-col justify-start w-full sm:w-3/12 gap-y-3 gap-x-2">
             <div class="w-full">
-               <p class="text-base text-gray-600 dark:text-gray-400"><ion-icon class="scale-90 translate-y-0.5" name="funnel-outline"></ion-icon> Filtrar por:</p>
+               <p class="text-base text-gray-600 dark:text-gray-400"><ion-icon class="scale-90 translate-y-0.5" name="funnel-outline" wire:ignore></ion-icon> Filtrar por:</p>
             </div>
             <div class="w-full bg-gray-50 p-4 rounded-lg shadow dark:bg-neutral-900">
                 <label for="hs-select-label" class="block text-sm font-medium mb-2 dark:text-white">Busca</label>
@@ -26,7 +26,7 @@
                     <input type="text" class="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-800 dark:border-neutral-700 dark:text-neutral-100 dark:placeholder-neutral-500 dark:focus:ring-neutral-600 block ps-8 pe-0" placeholder="Pesquise algo..." wire:model.live.debounce.300ms="search">
     
                     <div class="absolute inset-y-0 start-0 flex items-center pointer-events-none ps-2 peer-disabled:opacity-50 peer-disabled:pointer-events-none">
-                        <ion-icon name="search-outline" class="dark:text-neutral-100"></ion-icon>
+                        <ion-icon name="search-outline" class="dark:text-neutral-100" wire:ignore></ion-icon>
                     </div>
                 </div>
             </div>
@@ -67,7 +67,7 @@
                 <div class="flex items-center pl-5">
                     <label for="hs-medium-switch" class="text-sm font-semibold text-gray-500 me-3 dark:text-neutral-400">Mostrar apenas destacados</label>
     
-                    <input type="checkbox" id="hs-medium-switch" class="relative w-[3.25rem] h-7 p-px bg-gray-100 border-transparent shadow text-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 focus:ring-blue-600 disabled:opacity-50 disabled:pointer-events-none checked:bg-none checked:text-blue-600 checked:border-blue-600 focus:checked:border-blue-600 dark:bg-neutral-800 dark:border-neutral-700 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-600
+                    <input type="checkbox" id="hs-medium-switch" wire:model.live="featured" class="relative w-[3.25rem] h-7 p-px bg-gray-100 border-transparent shadow text-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 focus:ring-blue-600 disabled:opacity-50 disabled:pointer-events-none checked:bg-none checked:text-blue-600 checked:border-blue-600 focus:checked:border-blue-600 dark:bg-neutral-800 dark:border-neutral-700 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-600
                     before:inline-block before:size-6 before:bg-white checked:before:bg-blue-200 before:translate-x-0 checked:before:translate-x-full before:rounded-full before:shadow before:transform before:ring-0 before:transition before:ease-in-out before:duration-200 dark:before:bg-neutral-400 dark:checked:before:bg-blue-200">
                 </div>
             </div>
