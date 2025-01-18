@@ -35,16 +35,16 @@ class ImageUtilsService{
     
         // Redimensiona a imagem
         $image->cover(600, 600);
-    
+
         // Caminho para o overlay
-        $overlayPath = public_path('storage/uploads/assetImages/shadow_overlay.png');
+        $overlayPath = public_path('assets/images/shadow_overlay.png');
         if (file_exists($overlayPath)) {
             $image->place($overlayPath, 'bottom-right', 0, 0, 100);
         }
     
         // Adiciona texto à imagem
         $image->text($title, 300, 440, function ($font) {
-            $font->filename(public_path('storage/fonts/Quicksand-Regular.ttf'));
+            $font->filename(public_path('assets/fonts/Quicksand-Regular.ttf'));
             $font->size(40); // Tamanho da fonte
             $font->color('#ffffff'); // Cor do texto (branco)
             $font->align('center'); // Alinhamento horizontal

@@ -9,7 +9,9 @@ use Intervention\Image\Drivers\Gd\Driver;
 class ImageController extends Controller
 {
     public function optimizedImage($filename){
-        $path = storage_path('app/public/uploads/assetImages/' . $filename);
+        //$path = storage_path('app/public/uploads/assetImages/' . $filename);
+        $path = public_path("assets/images/$filename");
+        //dd($path);
         
         if (!file_exists($path)) {
             abort(404);
