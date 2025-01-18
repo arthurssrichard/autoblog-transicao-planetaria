@@ -44,6 +44,11 @@
             </tbody>
         </table>
     </div>
+    <form action="/blogadmin/books/{{$book->id}}" method="POST">
+        @csrf
+        @method('DELETE')
+        <button type="submit" onclick="confirm('Tem certeza disso?')" class="btn-small-danger mt-2">Apagar</button>
+    </form>
 </main>
 <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 @endsection

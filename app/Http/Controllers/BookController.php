@@ -43,4 +43,14 @@ class BookController extends Controller
 
         return view("admin.books.show",["capitulos"=>$capitulos, "book"=>$book]);
     }
+
+    public function destroy($id){
+        try {
+            $book = Book::findOrFail($id);
+            $book->delete();
+            return redirect()->back()->with('success', 'Livro deletado com sucesso.');
+        } catch (\Exception $e) {
+            dd($e);
+        }
+    }
 }

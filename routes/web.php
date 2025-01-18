@@ -30,6 +30,8 @@ Route::middleware(['is_admin'])->group(function (){
     Route::get('/blogadmin/books/create',[BookController::class, 'create']);
     Route::post('/blogadmin/books',[BookController::class, 'store']);
     Route::get('/blogadmin/books/{id}',[BookController::class, 'show']);
+    Route::delete('/blogadmin/books/{id}',[BookController::class, 'destroy']);
+
 });
 
 /* PUBLIC ROUTES */
