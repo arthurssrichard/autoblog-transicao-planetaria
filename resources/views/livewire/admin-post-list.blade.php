@@ -41,15 +41,22 @@
                     </td>
 
                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-neutral-300 text-start hidden sm:table-cell">
-                        <button wire:click="delete({{$post->id}})">
-                            <ion-icon name="trash-outline" class="text-red-500 text-xl" wire:ignore></ion-icon>
+                        <button x-data x-on:click="$dispatch('open-modal'); $dispatch('update-message', 'Caso apague o post {{$post->slug}}, todos os seus dados serão perdidos.')"
+                            wire:click="setDelete({{$post->id}})">
+                            <ion-icon wire:ignore name="trash-outline" class="text-red-500 text-xl"></ion-icon>
                         </button>
+
                     </td>
                 </tr>
 
                 @endforeach
             </tbody>
         </table>
+        <x-confirm-action-modal x-data="{ show: false, message: '' }"
+            x-on:open-modal.window="show = true"
+            x-on:close-modal.window="show = false"
+            x-on:update-message.window="message = $event.detail" />
+
         <div class="flex justify-center p-4">
             <nav aria-label="Pagination" class="inline-flex items-center space-x-2">
                 {{ $posts->links() }}

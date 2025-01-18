@@ -14,6 +14,8 @@ class AdminPostList extends Component
     #[Url()]
     public $search = '';
 
+    public $selectedId;
+
     public function mount(){
         $this->search = '';
     }
@@ -22,7 +24,12 @@ class AdminPostList extends Component
         $this->resetPage(); 
     }
 
-    public function delete($postId){
+    public function setDelete($id){
+        $this->selectedId = $id;
+    }
+
+    public function delete(){
+        $postId = $this->selectedId;
 
         $post = Post::findOrFail($postId);
         if($post->audio){
@@ -33,6 +40,8 @@ class AdminPostList extends Component
         }
         
         $post->delete();
+        $this->reset('selectedId');
+        $this->dispatch('close-modal');
     }
 
 
