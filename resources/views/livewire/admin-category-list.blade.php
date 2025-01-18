@@ -1,6 +1,6 @@
 <div class="flex flex-col rounded-lg border dark:border-neutral-500">
     @if(session()->has('error'))
-        <x-error-alert title="Erro" message="{{ session('error') }}"/>
+    <x-error-alert title="Erro" message="{{ session('error') }}" />
     @endif
     <div class="p-4">
         <div class="relative lg:w-6/12 min-w-6/12">
@@ -19,6 +19,7 @@
                 <th scope="col" class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase dark:text-neutral-500 hidden sm:table-cell">Cor</th>
                 <th scope="col" class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase dark:text-neutral-500 hidden sm:table-cell">Ação</th>
             </thead>
+
             <tbody> @foreach($categories as $category)
                 <tr class="border-b dark:border-neutral-500">
                     <td class="px-6 py-4 whitespace-normal text-sm font-medium text-gray-800 dark:text-neutral-300 text-start text-ellipsis table-cell sm:table-cell">
@@ -34,8 +35,9 @@
                     </td>
 
                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-neutral-300 text-start hidden sm:table-cell">
-                        <button wire:click="delete({{$category->id}})">
-                            <ion-icon name="trash-outline" class="text-red-500 text-xl" wire:ignore></ion-icon>
+                        <button x-data x-on:click="$dispatch('open-modal'); $dispatch('update-message', 'Caso apague a categoria {{$category->name}}, todos os posts serão movidos para Sem categoria.')"
+                                wire:click="setDelete({{$category->id}})">
+                            <ion-icon wire:ignore name="trash-outline" class="text-red-500 text-xl"></ion-icon>
                         </button>
                     </td>
                 </tr>
@@ -43,6 +45,12 @@
                 @endforeach
             </tbody>
         </table>
+
+        <x-confirm-action-modal x-data="{ show: false, message: '' }"
+            x-on:open-modal.window="show = true"
+            x-on:close-modal.window="show = false"
+            x-on:update-message.window="message = $event.detail" />
+        {{--@include('livewire/confirm-action-modal')--}}
         <div class="flex justify-center p-4">
             <nav aria-label="Pagination" class="inline-flex items-center space-x-2">
                 {{ $categories->links() }}
