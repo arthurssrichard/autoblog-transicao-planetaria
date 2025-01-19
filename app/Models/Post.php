@@ -45,4 +45,29 @@ class Post extends Model
             $q->where('slug',$slug);
         });
     }
+
+    public function getCategoryTextColorAttribute()
+    {
+        $backgroundColor = $this->category->color ?? '#ffffff'; // Define um padrão caso não haja cor definida
+
+        return $this->isColorLight($backgroundColor) ? '#131313' : '#f5f5f5';
+    }
+
+    private function isColorLight($hexColor)
+    {
+        // Remove o "#" se existir
+        $hexColor = ltrim($hexColor, '#');
+
+        // Converte para RGB
+        $r = hexdec(substr($hexColor, 0, 2));
+        $g = hexdec(substr($hexColor, 2, 2));
+        $b = hexdec(substr($hexColor, 4, 2));
+
+        // Calcula o brilho relativo (percepção visual da cor)
+        $luminance = ($r * 0.299 + $g * 0.587 + $b * 0.114) / 255;
+
+        // Define um limite para considerar claro ou escuro (0.5 é um valor comum para esse tipo de cálculo)
+        return $luminance > 0.5;
+    }
+
 }
