@@ -8,7 +8,7 @@ class PublicHeader extends Component
 {
     public function isActive($routeName){
         
-        return request()->is($routeName) ? 'text-teal-500' : 'text-gray-400';
+        return request()->is("$routeName*") ? 'text-teal-500' : 'text-gray-400';
     }
 
 
