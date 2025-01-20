@@ -47,7 +47,7 @@ Route::get('/', [HomeController::class, 'index']);
 Route::get('/sobre-nos', [HomeController::class, 'sobreNos']);
 Route::get('/contato', [HomeController::class, 'contato']);
 Route::get('/introducao', [HomeController::class, 'introducao']);
-Route::get('/politica-de-privacidade', [HomeController::class, 'politica-de-privacidade']);
+Route::get('/politica-de-privacidade', [HomeController::class, 'politicaDePrivacidade']);
 Route::get('/termos-de-uso', [HomeController::class, 'termos-de-uso']);
 
 

@@ -26,4 +26,9 @@ class HomeController extends Controller
         return view('contato');
     }
 
+    public function politicaDePrivacidade(){
+        $policy = 'oioi';
+        return view ('policy',["policy"=>$policy]);
+    }
+
 }
