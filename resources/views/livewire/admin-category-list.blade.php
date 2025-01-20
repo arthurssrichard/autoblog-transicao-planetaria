@@ -1,6 +1,6 @@
 <div class="flex flex-col rounded-lg border dark:border-neutral-500">
     @if(session()->has('error'))
-    <x-error-alert title="Erro" message="{{ session('error') }}" />
+    <x-alerts.error-alert title="Erro" message="{{ session('error') }}" />
     @endif
     <div class="p-4">
         <div class="relative lg:w-6/12 min-w-6/12">

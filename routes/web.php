@@ -32,6 +32,9 @@ Route::middleware(['is_admin'])->group(function (){
     Route::get('/blogadmin/books/{id}',[BookController::class, 'show']);
     Route::delete('/blogadmin/books/{id}',[BookController::class, 'destroy']);
 
+    Route::get('/blogadmin/settings',function(){
+        return view('admin.settings');
+    });
 });
 
 /* PUBLIC ROUTES */
@@ -46,6 +49,7 @@ Route::get('/contato', [HomeController::class, 'contato']);
 Route::get('/introducao', [HomeController::class, 'introducao']);
 Route::get('/politica-de-privacidade', [HomeController::class, 'politica-de-privacidade']);
 Route::get('/termos-de-uso', [HomeController::class, 'termos-de-uso']);
+
 
 
 Route::post('/tts/synthesize', [TTSController::class, 'synthesize']);

@@ -98,7 +98,7 @@ return [
         'numeric' => 'The :attribute field must not be greater than :max.',
         'string' => 'O campo ":attribute" deve ter no máximo :max letras.',
     ],
-    'max_digits' => 'The :attribute field must not have more than :max digits.',
+    'min_digits' => 'O campo :attribute deve ter ao menos :max digitos.',
     'mimes' => 'The :attribute field must be a file of type: :values.',
     'mimetypes' => 'The :attribute field must be a file of type: :values.',
     'min' => [
@@ -107,7 +107,7 @@ return [
         'numeric' => 'The :attribute field must be at least :min.',
         'string' => 'O campo ":attribute" deve ter pelo menos :min letras.',
     ],
-    'min_digits' => 'The :attribute field must have at least :min digits.',
+    'min_digits' => 'O campo :attribute deve ter ao menos :min digitos.',
     'missing' => 'The :attribute field must be missing.',
     'missing_if' => 'The :attribute field must be missing when :other is :value.',
     'missing_unless' => 'The :attribute field must be missing unless :other is :value.',

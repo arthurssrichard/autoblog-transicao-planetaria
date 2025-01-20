@@ -7,7 +7,7 @@ use App\Models\Category;
 use App\Models\Post;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-
+use Illuminate\Support\Facades\DB;
 class DatabaseSeeder extends Seeder
 {
     /**
@@ -15,17 +15,27 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        Post::factory(30)->create();
+        // Post::factory(30)->create();
 
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
-            'password' => '123'
-        ]);
-        Category::factory()->create([
-            'name' => 'Sem categoria',
-            'slug' => 'sem-categoria',
-            'color' => '#cccccc',
+        // User::factory()->create([
+        //     'name' => 'Test User',
+        //     'email' => 'test@example.com',
+        //     'password' => '123'
+        // ]);
+        // Category::factory()->create([
+        //     'name' => 'Sem categoria',
+        //     'slug' => 'sem-categoria',
+        //     'color' => '#cccccc',
+        // ]);
+
+        // DB::table('settings')->insert([
+        //     'key' => 'instagram_api_key',
+        //     'value' => 'default_value'
+        // ]);
+
+        DB::table('settings')->insert([
+            'key' => 'instagram_user_id',
+            'value' => 'default_value'
         ]);
     }
 }

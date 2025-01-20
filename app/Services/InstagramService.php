@@ -2,6 +2,7 @@
 
 namespace App\Services;
 use GuzzleHttp\Client;
+use App\Services\SettingsService;
 
 class InstagramService{
 
@@ -14,10 +15,10 @@ class InstagramService{
     }
 
     public function createPostContainer(String $imageUrl, ?String $caption){
+        $settings = new SettingsService;
 
-        $userId = config('services.instagram.test_user_id');
-        $apiKey = config('services.instagram.access_token');
-        
+        $userId = $settings->setting('instagram_user_id');
+        $apiKey = $settings->setting('instagram_api_key');
         try{
 
             $response = $this->client->request('POST',$userId.'/media',[
