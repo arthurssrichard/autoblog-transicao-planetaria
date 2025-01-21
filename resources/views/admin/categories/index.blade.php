@@ -1,5 +1,5 @@
 @extends('layouts.admin')
-@section('title','Categories')
+@section('title','Categorias')
 @section('content')
 <main class="w-full flex flex-row justify-center p-5">
     <div class="w-8/12">

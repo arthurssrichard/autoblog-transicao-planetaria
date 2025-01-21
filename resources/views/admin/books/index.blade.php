@@ -1,5 +1,5 @@
 @extends('layouts.admin')
-@section('title', 'Livros salvos')
+@section('title', 'Livros')
 @section('content')
 <main class="w-full px-10 py-16">
     <section class="mb-10">

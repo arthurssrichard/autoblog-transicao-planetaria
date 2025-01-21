@@ -1,5 +1,5 @@
 @extends('layouts.main')
-@section('title','Sobre nós')
+@section('title','Política de privacidade')
 @section('content')
 <main class="flex-grow flex flex-col items-center">
 <section class="w-full sm:w-6/12 space-y-4 p-5">

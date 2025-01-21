@@ -1,5 +1,5 @@
 @extends('layouts.admin')
-@section('title', 'Capítulos do Livro')
+@section('title', 'Livro: '.$book->nome)
 @section('content')
 <main class="w-full px-10 py-16">
     <!-- Header -->

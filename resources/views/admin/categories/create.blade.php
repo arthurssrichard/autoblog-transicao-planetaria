@@ -1,5 +1,5 @@
 @extends('layouts.admin')
-@section('title','Novo post')
+@section('title','Nova categoria')
 @section('content')
 <main>
     <livewire:create-category 

@@ -1,5 +1,5 @@
 @extends('layouts.main')
-@section('title','Novo post')
+@section('title',$post->title)
 @section('content')
 <main class="dark:bg-neutral-900">
     <section 

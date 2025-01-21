@@ -1,5 +1,5 @@
 @extends('layouts.main')
-@section('title','Sobre nós')
+@section('title','Contato')
 @section('content')
 <main class="flex-grow flex flex-col items-center">
     <section class="px-4 py-10 w-full max-w-7xl">
