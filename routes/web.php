@@ -56,6 +56,12 @@ Route::post('/tts/synthesize', [TTSController::class, 'synthesize']);
 
 Route::get('/optimized-image/{filename}',[ImageController::class, 'optimizedImage']);
 
+Route::get('/sitemap.xml', function () {
+    $posts = \App\Models\Post::latest()->get();
+    return response()->view('sitemap', compact('posts'))->header('Content-Type', 'text/xml');
+});
+
+
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),

@@ -1,2 +1,4 @@
 User-agent: *
-Disallow:
+Disallow: /blogadmin/
+Sitemap: https://transicaoplanetaria.com/sitemap.xml
+
