@@ -44,9 +44,8 @@
                 <div class="w-full bg-gray-50 p-4 rounded-lg shadow dark:bg-neutral-900">
                     <label for="hs-select-label" class="block text-sm font-medium mb-2 dark:text-white">Ordenar por</label>
                     <select id="hs-select-label" class="select-label" name="" id="" wire:model.live="sort">
-                        <option class="" selected="" value="desc">Mais recente</option>
-                        <option value="asc">Mais antigo</option>
-                        <option value="">Curtidas</option>
+                        <option selected="" value="desc">Mais recente</option>
+                        <option             value="asc">Mais antigo</option>
                     </select>
                 </div>
             </div>

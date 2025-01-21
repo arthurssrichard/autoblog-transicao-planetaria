@@ -22,7 +22,7 @@ class PostList extends Component
     public $category = null;
 
     #[Url(as: 'destacados', history: true)]
-    public $featured;
+    public $featured = false;
 
     public function updatedSearch(){
         $this->resetPage(); 
@@ -33,8 +33,11 @@ class PostList extends Component
     }
     public function render()
     {
+        $validCategory = Category::where('slug', $this->category)->exists();
+
+
         $posts = Post::orderBy('published_at',$this->sort)
-                    ->when(Category::where('slug',$this->category)->first(), function($query){
+                    ->when($validCategory, function ($query) {
                         $query->categorySlug($this->category);
                     })
                     ->when($this->featured, function ($query){
