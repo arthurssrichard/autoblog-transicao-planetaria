@@ -1,5 +1,12 @@
 @extends('layouts.main')
 @section('title','Home')
+@section('metatags')
+<meta name="description" content="Bem vindo ao site Transição Planetária em Andamento!">
+<meta name="robots" content="index, follow">
+<meta property="og:title" content="Mensagens Espíritas - Transição planetária em andamento">
+<meta property="og:description" content="Bem vindo ao site Transição Planetária em Andamento!">
+<meta property="og:image" content="{{url('/optimized-image/logo.png')}}">
+@endsection
 @section('content')
 <main class="container mx-auto px-5 flex flex-col">
     <section class="mb-10">

@@ -1,5 +1,12 @@
 @extends('layouts.main')
 @section('title','Sobre nós')
+@section('metatags')
+<meta name="description" content="Descubra sobre nosso propósito de compartilhar mensagens espíritas">
+<meta name="robots" content="index, follow">
+<meta property="og:title" content="Mensagens Espíritas - Transição planetária em andamento">
+<meta property="og:description" content="Descubra sobre nosso propósito de compartilhar mensagens espíritas">
+<meta property="og:image" content="{{url('/optimized-image/logo.png')}}">
+@endsection
 @section('content')
 <main class="flex-grow flex flex-col">
     <section class="px-4 py-6 flex flex-col justify-center items-center h-full">
