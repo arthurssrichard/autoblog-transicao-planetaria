@@ -30,8 +30,17 @@ services:
     volumes:
       - db:/var/lib/mysql
 
+  botpress:
+    image: botpress/server:latest
+    ports:
+      - '3000:3000'
+    volumes:
+      - botpress_data:/botpress/data
+    restart: always
+
 volumes:
   db:
+  botpress_data:
 
 networks:
   docker-network:

@@ -1,5 +1,12 @@
-@extends('layouts.post')
+@extends('layouts.main')
 @section('title',$post->title)
+@section('metatags')
+<meta name="description" content="{{ $post->getExcerpt(60) }}">
+<meta name="robots" content="index, follow">
+<meta property="og:title" content="{{ $post->title }}">
+<meta property="og:description" content="{{ $post->getExcerpt(60) }}">
+<meta property="og:image" content="{{ $post->imagePath }}">
+@endsection
 @section('content')
 <main class="dark:bg-neutral-900">
     <section 

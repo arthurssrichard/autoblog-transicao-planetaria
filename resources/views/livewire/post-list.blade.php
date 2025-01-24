@@ -6,7 +6,6 @@
         <!-- Post list -->
         <div class="flex flex-col justify-center items-start w-full sm:w-8/12">
             <div class="flex flex-col space-y-3 w-full pt-10">
-    
                 @foreach($posts as $post)
                 @include('livewire/includes/post-card')
                 @endforeach
