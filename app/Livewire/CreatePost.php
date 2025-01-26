@@ -37,6 +37,10 @@ class CreatePost extends Component
 
     #[Rule('required')]
     public $categoriaSelecionada;
+    
+    public $date;
+
+    public $time;
 
     public $imageFromWeb;
     public $image;
@@ -45,10 +49,8 @@ class CreatePost extends Component
     public $images;
     public $currentTag;
     public $tags = [];
-    public $date;
-    public $time;
     public $post_id;
-
+    
     public $instagramDescription;
 
     public $testImage;
@@ -56,6 +58,7 @@ class CreatePost extends Component
     public $toggleHiddenPost;
     public $toggleFeaturedPost;
     public $togglePostWithInstagram;
+    public $toggleGenerateAudio;
 
     public function mount($title = '', $slug = '', $mensagem = '', $tags = '', $category_id = null, $date = null, $time = null, $post_id = null){
         $this->title = $title;
@@ -63,10 +66,15 @@ class CreatePost extends Component
         $this->mensagem = $mensagem;
         $this->tags = $tags;
         $this->categoriaSelecionada = $category_id;
-        $this->date = $date ?? date('Y-m-d');
-        $this->time = $time ?? date('H:i');
         $this->post_id = $post_id;
         $this->togglePostWithInstagram = false;
+        $this->toggleGenerateAudio = true;
+
+        // $this->date = $date ?? date('Y-m-d');
+        // $this->time = $time ?? date('H:i');
+
+        $this->date = null;
+        $this->time = null;
     }
     
 
@@ -138,8 +146,11 @@ class CreatePost extends Component
         $post->user_id = Auth::user()->id;
 
         $post->image = $this->handleImageUpload($post);  
-        // $audio_path = $ttsController->synthesize($this->mensagem, $this->slug);
-        // $post->audio = $audio_path;
+
+        if($this->toggleGenerateAudio){
+            $audio_path = $ttsController->synthesize($this->mensagem, $this->slug);
+            $post->audio = $audio_path;
+        }
 
         $post->save();
         return redirect('books/1');
@@ -211,6 +222,32 @@ class CreatePost extends Component
 
             $this->tags = array_values($this->tags);
         }
+    }
+
+    public function ajustTime(){
+        $this->reset('time');
+        $this->reset('date');
+    }
+
+    protected function rules()
+    {
+        return [
+            'title' => 'required|min:2|max:50',
+            'slug' => 'required|min:2|max:50',
+            'mensagem' => 'required|min:5',
+            'imageUpload' => 'nullable|sometimes|image',
+            'categoriaSelecionada' => 'required',
+            'date' => function ($attribute, $value, $fail) {
+                if (!empty($this->time) && empty($value)) {
+                    $fail('A data é obrigatória se a hora estiver preenchida.');
+                }
+            },
+            'time' => function ($attribute, $value, $fail) {
+                if (!empty($this->date) && empty($value)) {
+                    $fail('A hora é obrigatória se a data estiver preenchida.');
+                }
+            }
+        ];
     }
 
     public function render()

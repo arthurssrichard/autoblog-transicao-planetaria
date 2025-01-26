@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Model;
+use Carbon\Carbon;
 
 class Post extends Model
 {
@@ -44,6 +45,10 @@ class Post extends Model
         return $query->whereHas('category', function ($q) use ($slug){
             $q->where('slug',$slug);
         });
+    }
+
+    public function scopePublished($query){
+        $query->where('published_at','<=',Carbon::now());
     }
 
     public function getCategoryTextColorAttribute()

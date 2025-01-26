@@ -129,31 +129,51 @@
 
                 <div class="p-6 mt-5 rounded-lg grid lg:grid-cols-2 gap-4">
 
-                    <div>
-                        <h3 class="text-xl font-bold mb-2 dark:text-neutral-300">Publicação</h3>
-                        <div class="flex flex-row flex-wrap justify-start gap-2">
-                            <div class="flex flex-row space-x-2">
-                                <input type="date" class="px-3 block border-gray-200 rounded-lg dark:bg-neutral-900 dark:text-neutral-400 dark:border-neutral-600" wire:model.lazy="date">
-                                <input type="time" class="px-3 block border-gray-200 rounded-lg dark:bg-neutral-900 dark:text-neutral-400 dark:border-neutral-600" wire:model.lazy="time">
+                    <div class="flex flex-col gap-y-3">
+                        <div class="flex flex-col">
+                            <h3 class="text-xl font-bold mb-2 dark:text-neutral-300">Publicação</h3>
+                            <div class="flex flex-row flex-wrap justify-start gap-2">
+                                <div class="flex flex-row space-x-2">
+                                    <input type="date" class="px-3 block border-gray-200 rounded-lg dark:bg-neutral-900 dark:text-neutral-400 dark:border-neutral-600" wire:model.lazy="date">
+                                    <input type="time" class="px-3 block border-gray-200 rounded-lg dark:bg-neutral-900 dark:text-neutral-400 dark:border-neutral-600" wire:model.lazy="time">
+                                </div>
+                                <button class="btn-small bg-blue-600 text-white hover:bg-blue-700 focus:bg-blue-700" type="submit">
+                                    {{ (($this->date == null) && ($this->time == null)) ? 'Publicar agora' : 'Agendar' }}
+                                </button>
                             </div>
-                            <button class="btn-small bg-blue-600 text-white hover:bg-blue-700 focus:bg-blue-700" type="submit">
-                                {{ (strtotime($this->date . ' ' . $this->time) === strtotime(date('Y-m-d H:i'))) ? "Publicar agora" : "Agendar" }}
-                            </button>
+                            <small class="text-xs text-blue-700 hover:underline cursor-pointer w-max" wire:click="ajustTime">Ajustar para agora</small>
                         </div>
-                        <div class="flex items-center mt-2">
-                            <input type="checkbox" id="hs-basic-with-description-unchecked" wire:model="toggleFeaturedPost" class="default-toggle">
-                            <label for="hs-basic-with-description-unchecked" class="text-sm text-gray-500 ms-3 dark:text-neutral-400">Post oculto</label>
+
+                        <div class="bg-neutral-100 dark:bg-neutral-800 shadow-md p-3 rounded-xl">
+                            <h2 class="dark:text-neutral-400">Visibilidade</h2>
+                            <div class="flex gap-x-6">
+                                <div class="flex items-center mt-2">
+                                    <input type="checkbox" id="toggle-hidden-post" wire:model="toggleFeaturedPost" class="default-toggle">
+                                    <label for="toggle-hidden-post" class="text-sm text-gray-500 ms-3 dark:text-neutral-400">Post oculto</label>
+                                </div>
+                                <div class="flex items-center mt-2">
+                                    <input type="checkbox" id="toggle-featured-post" wire:model="toggleHiddenPost" class="default-toggle">
+                                    <label for="toggle-featured-post" class="text-sm text-gray-500 ms-3 dark:text-neutral-400">Post destacado</label>
+                                </div>
+                            </div>
                         </div>
-                        <div class="flex items-center mt-2">
-                            <input type="checkbox" id="hs-basic-with-description-unchecked" wire:model="toggleHiddenPost" class="default-toggle">
-                            <label for="hs-basic-with-description-unchecked" class="text-sm text-gray-500 ms-3 dark:text-neutral-400">Post destacado</label>
+
+                        <div class="bg-neutral-100 dark:bg-neutral-800 shadow-md p-3 rounded-xl">
+                            <h2 class="dark:text-neutral-400">Adicional</h2>
+                            <div class="flex gap-x-6">
+                                <div class="flex items-center mt-2">
+                                    <input type="checkbox" id="toggle-generate-audio" wire:model="toggleGenerateAudio" class="default-toggle">
+                                    <label for="toggle-generate-audio" class="text-sm text-gray-500 ms-3 dark:text-neutral-400">Gerar áudio a partir da mensagem</label>
+                                </div>
+                                @if($testImage)
+                                <div class="flex items-center mt-2">
+                                    <input type="checkbox" id="toggle-post-with-instagram" wire:model="togglePostWithInstagram" class="default-toggle">
+                                    <label for="toggle-post-with-instagram" class="text-sm text-gray-500 ms-3 dark:text-neutral-400">Publicar também no Instagram</label>
+                                </div>
+                                @endif
+                            </div>
                         </div>
-                        @if($testImage)
-                        <div class="flex items-center mt-2">
-                            <input type="checkbox" id="hs-basic-with-description-unchecked" wire:model="togglePostWithInstagram" class="default-toggle">
-                            <label for="hs-basic-with-description-unchecked" class="text-sm text-gray-500 ms-3 dark:text-neutral-400">Publicar também no Instagram</label>
-                        </div>
-                        @endif
+
                     </div>
 
 

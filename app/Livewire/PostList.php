@@ -33,10 +33,11 @@ class PostList extends Component
     }
     public function render()
     {
+        $now = date("Y-m-d");
         $validCategory = Category::where('slug', $this->category)->exists();
 
-
-        $posts = Post::orderBy('published_at',$this->sort)
+        $posts = Post::published()
+                    ->orderBy('published_at',$this->sort)
                     ->when($validCategory, function ($query) {
                         $query->categorySlug($this->category);
                     })
@@ -44,6 +45,7 @@ class PostList extends Component
                         return $query->where('featured',true);
                     })
                     ->where('title','like',"%{$this->search}%")
+                    ->where('published_at','<=',$now)
                     ->paginate(8);
         $categories = Category::all();
         return view('livewire.post-list',['posts'=>$posts, 'categories' => $categories]);
