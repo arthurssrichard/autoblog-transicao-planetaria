@@ -26,9 +26,11 @@
                 {{$post->category->name}}
             </div>
             <h2 class="text-3xl sm:text-4xl font-medium text-neutral-200 font-sans">{{$post->title}}</h2>
+            @if(isset($post->audio))
             <div>
                 <button class="btn-small-play" id="ttsBtn">Reproduzir <ion-icon name="play-outline" class="text-lg"></ion-icon></button>
             </div>
+            @endif
             <audio controls id="audioPlayer" class="hidden">
                 <source src="{{asset('storage/'.$post->audio)}}">
             </audio>
@@ -40,9 +42,6 @@
         <p class="text-neutral-500 dark:text-neutral-600 uppercase font-thin">Publicado em: {{$post->published_at->format('Y-m-d')}}</p>
         <div class="lg:w-6/12 md:w-full text-lg font-normal dark:text-neutral-200" id="post-body">{!!$post->body!!}</div>
     </section>
-
-
-
 </main>
 <script>
     document.addEventListener('DOMContentLoaded', function () {

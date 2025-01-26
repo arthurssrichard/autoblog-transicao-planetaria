@@ -120,6 +120,8 @@ class CreatePost extends Component
     }
 
     public function store(){
+        dd(date('d-m-Y H:i'));
+
         $this->validate();
 
         $ttsController = new TTSController();
@@ -136,13 +138,18 @@ class CreatePost extends Component
         if($this->toggleHiddenPost){
             $post->hidden = true;
         }
+        
+        if($this->date || $this->time){
+            $post->published_at = $this->date ." ". $this->time;
+        }else{
+            $post->published_at = date('d-m-Y H:i');
+        }
 
         $post->title = $this->title;
         $post->slug = $this->slug;
         $post->body = $this->mensagem;
         $post->tags = $this->tags;
         $post->category_id = $this->categoriaSelecionada;
-        $post->published_at = $this->date ." ". $this->time;
         $post->user_id = Auth::user()->id;
 
         $post->image = $this->handleImageUpload($post);  
