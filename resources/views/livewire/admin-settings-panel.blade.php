@@ -67,5 +67,19 @@
             </div>
         </div>
 
+        <div role="tabpanel" class="{{$tab === 'users' ? '' : 'hidden'}}">
+            <h2 class="text-2xl font-bold dark:text-neutral-300">Usuários</h2>
+            <div class="mt-3 items-center space-y-4 p-2">
+                @forelse($users as $user)
+                    <div class="rounded-xl bg-neutral-200 dark:bg-neutral-800 text-neutral-600 dark:text-neutral-400 p-3 px-5 flex justify-between">
+                        <span>{{$user->name}} <span class="text-neutral-500 text-xs">Cargo: {{$user->role}}</span></span>
+                        <span class="text-red-400 text-lg cursor-pointer" wire:click="deleteUser({{$user->id}})" wire:confirm="Tem certeza que quer deletar esse usuário?"><ion-icon wire:ignore name="trash"></ion-icon></span>
+                    </div>
+                @empty
+                    <span class="text-neutral-400">Sem usuários</span>
+                @endforelse
+            </div>
+        </div>
+
     </div>
 </div>

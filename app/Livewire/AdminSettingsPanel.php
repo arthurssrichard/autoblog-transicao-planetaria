@@ -7,11 +7,14 @@ use Livewire\Attributes\Url;
 use Illuminate\Support\Facades\Artisan;
 use App\Services\SettingsService;
 use Livewire\Attributes\Rule;
+use App\Models\User;
 
 class AdminSettingsPanel extends Component
 {
-    #[Url()]
-    public $tab;
+    #[Url(as: 'tab')]
+    public $tab = 'cache';
+
+    public $users;
 
     #[Rule('sometimes|min:2|max:250')]
     public $instagramApiKey;
@@ -22,18 +25,33 @@ class AdminSettingsPanel extends Component
     public $tabs = [
         'cache' => 'Cache',
         'integrations' => 'Integrações',
+        'users' => 'Usuários'
     ];
+
+
+    public function loadUsers()
+    {
+        $this->users = ($this->tab == 'users') ? User::all() : collect();
+        //$this->users = User::all();
+    }
+
+    public function updatedTab()
+    {
+        $this->loadUsers();
+    }
 
     public function mount()
     {
         $this->tab = array_key_first($this->tabs);
         $this->instagramApiKey = (new SettingsService)->setting('instagram_api_key');
         $this->instagramUserId = (new SettingsService)->setting('instagram_user_id');
+        $this->loadUsers();
     }
 
     public function setTab($tab)
     {
         $this->tab = $tab;
+        $this->loadUsers();
     }
 
     // Aba cache
@@ -76,6 +94,16 @@ class AdminSettingsPanel extends Component
         $this->validate();
 
         (new SettingsService)->setting('instagram_user_id', $this->instagramUserId);
+    }
+
+    public function deleteUser($id){
+        try {
+            $user = User::findOrFail($id);
+            $user->delete();
+            return redirect()->back()->with('success', 'Usuário deletado com sucesso.');
+        } catch (\Exception $e) {
+            dd($e);
+        }
     }
 
 
