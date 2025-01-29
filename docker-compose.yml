@@ -9,26 +9,26 @@ services:
     ports:
       - 80:80
     depends_on:
-      - db
+      - postgres
     command: >
       sh -c "php artisan migrate --force &&
              apache2-foreground"
 
-  db:
-    image: mysql:5.7
-    platform: linux/amd64
+
+  postgres:
+    image: postgres:17.2
     ports:
-      - 3306:3306
+      - 5432:5432
     restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
-      MYSQL_DATABASE: ${DB_DATABASE}
-      MYSQL_USER: ${DB_USERNAME}
-      MYSQL_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_USER: ${DB_USERNAME}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_DATABASE}
+      BP_DB_DATABASE: ${BP_DB_DATABASE}
     networks:
       - docker-network
     volumes:
-      - db:/var/lib/mysql
+      - pgdata:/var/lib/postgresql/data
 
   botpress:
     image: botpress/server:latest
@@ -36,11 +36,23 @@ services:
       - '3000:3000'
     volumes:
       - botpress_data:/botpress/data
+    environment:
+      PG_HOST: ${DB_HOST}
+      PG_PORT: ${DB_PORT}
+      PG_USER: ${DB_USERNAME}
+      PG_PASSWORD: ${DB_PASSWORD}
+      PG_SSL: false
+      PGSSLMODE: disable
+      DATABASE_URL: "postgres://${DB_USERNAME}:${DB_PASSWORD}@${DB_HOST}:${DB_PORT}/${BP_DB_DATABASE}?sslmode=disable"
+    networks:
+      - docker-network
     restart: always
+    depends_on:
+      - postgres
 
 volumes:
-  db:
   botpress_data:
+  pgdata:
 
 networks:
   docker-network:
