@@ -19,6 +19,7 @@ class ImageController extends Controller
 
         $manager = new ImageManager(new Driver());
 
+        // Otimiza a imagem
         $image = $manager->read($path);
         $image->scaleDown(300);
         $image->toPng();

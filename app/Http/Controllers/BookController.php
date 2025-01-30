@@ -26,6 +26,8 @@ class BookController extends Controller
         $book->fim_indice = $request->fim_indice;
 
         $book->paginas_indice = range($request->pg_inicio, $request->pg_fim);
+
+        // Salva o arquivo e seu endereço no database
         if($request->hasFile('book') && $request->file('book')->isValid()){
             $bookFile = $request->file('book');
             $bookName = md5($request->book->getClientOriginalName() . strtotime("now")).".".$request->book->extension();

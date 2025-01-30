@@ -13,13 +13,20 @@ use Illuminate\Support\Facades\Auth;
 
 class PostController extends Controller
 {
-    protected $ttsService;
+    protected $ttsService; // servico de text to speech
 
     public function __construct(GoogleTextToSpeechService $ttsService)
     {
         $this->ttsService = $ttsService;
     }
 
+    /**
+     * autoCreate
+     * Encontra páginas de um capítulo a partir de um título, selecionado no índice pelo usuário.
+     * A partir disso, se formata a mensagem
+     * @param $request - requisicao recebida
+     * @return view - retorna a view com a mensagem, titulo e slug formatados
+     */
     public function autoCreate(Request $request){
         $title = $request->input('title');
         $slug = Str::slug($title); //(new SlugNormalizer)->normalize($title);
@@ -35,6 +42,14 @@ class PostController extends Controller
         return view('admin.posts.create',['title' => $title, 'slug'=>$slug, 'mensagem'=>$mensagem]);
     }
 
+    /**
+     * specificAutoCreate
+     * Recebe um titlo, id do livro e paginas iniciais e finais do capítulo para procurar o texto especificamente,
+     * baseado no fornecimento das páginas e título diretamente pelo usuário, ao invés de ver pelo índice.
+     * Útil para situações onde o título no índice do capítulo é diferente do título real, na hora de ler o capítulo
+     * @param $request - requisicao recebida
+     * @return view - retorna a view com a mensagem, titulo e slug formatados
+     */
     public function specificAutoCreate(Request $request){
         $pdfService = new PdfService;
 
@@ -73,11 +88,12 @@ class PostController extends Controller
         ]);
     }
 
+    // Listar posts na pagina de admin
     public function indexAdmin(){
         return view('admin.posts.index');
     }
 
-    // PARA O PÚBLICO
+    // Listar posts para o público
     public function index(){
         return view('posts.index');
     }

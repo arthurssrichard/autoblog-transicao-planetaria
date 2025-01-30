@@ -14,6 +14,10 @@ class InstagramService{
         ]);
     }
 
+
+    /**
+     * Cria um container com o post que será postado no Instagram
+     */
     public function createPostContainer(String $imageUrl, ?String $caption){
         $settings = new SettingsService;
 
@@ -38,7 +42,9 @@ class InstagramService{
     }
 
 
-
+    /**
+     * Publica o container que contém o post
+     */
     public function publishPost($container){
         try {
             $containerId = $container['id'];

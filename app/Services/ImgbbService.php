@@ -12,6 +12,13 @@ class ImgbbService{
         ]);
     }
 
+    /**
+     * Faz um upload temporário (60 sec) de uma imagem no imagebb.
+     * Isso é necessário pois o Instagram precisa de uma URL pública para receber a
+     * imagem e postar com sua API.
+     * 
+     * @return $data['data']['url'] (link da imagem)
+     */
     public function uploadImage($image){
         $apiKey = config('services.imgbb.api_key');
 

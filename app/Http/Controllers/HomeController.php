@@ -28,8 +28,7 @@ class HomeController extends Controller
     }
 
     public function politicaDePrivacidade(){
-        $policy = 'oioi';
-        return view ('policy',["policy"=>$policy]);
+        return view ('policy');
     }
 
 }

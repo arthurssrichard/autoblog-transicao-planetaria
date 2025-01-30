@@ -37,9 +37,8 @@ class CreatePost extends Component
 
     #[Rule('required')]
     public $categoriaSelecionada;
-    
-    public $date;
 
+    public $date;
     public $time;
 
     public $imageFromWeb;
@@ -50,7 +49,7 @@ class CreatePost extends Component
     public $currentTag;
     public $tags = [];
     public $post_id;
-    
+
     public $instagramDescription;
 
     public $testImage;
@@ -60,7 +59,12 @@ class CreatePost extends Component
     public $togglePostWithInstagram;
     public $toggleGenerateAudio;
 
-    public function mount($title = '', $slug = '', $mensagem = '', $tags = '', $category_id = null, $date = null, $time = null, $post_id = null){
+
+    /**
+     * Inicializa os valores do componente ao ser montado
+     */
+    public function mount($title = '', $slug = '', $mensagem = '', $tags = '', $category_id = null, $date = null, $time = null, $post_id = null)
+    {
         $this->title = $title;
         $this->slug = $slug;
         $this->mensagem = $mensagem;
@@ -76,9 +80,13 @@ class CreatePost extends Component
         $this->date = null;
         $this->time = null;
     }
-    
 
-    public function generateImage(){
+
+    /**
+     * Gera imagens a partir de um serviço externo (Pexels)
+     */
+    public function generateImage()
+    {
         $groq = new GroqService();
         $pexels = new PexelsService();
 
@@ -97,11 +105,11 @@ class CreatePost extends Component
 
             Lembre-se: a frase será utilizada como query de busca no Pexels, então ela deve ser genérica, visualmente clara e fácil de associar a imagens disponíveis.
         ";
-        if(!$this->consulta){
+        if (!$this->consulta) {
             $this->consulta = $groq->message($message);
-            
+
             $pattern = '/"(.*?)"/';
-            if(preg_match_all($pattern, $this->consulta, $matches)){
+            if (preg_match_all($pattern, $this->consulta, $matches)) {
                 $this->consulta = implode(' ', $matches[1]);
             }
         }
@@ -110,38 +118,55 @@ class CreatePost extends Component
         //pega a query e procura no pexels
     }
 
-    public function toggleImage($imageId){
-        $this->imageFromWeb = collect($this->images)->firstWhere('id',$imageId);
+
+    /**
+     * Define qual imagem foi escolhida pelo usuário
+     */
+    public function toggleImage($imageId)
+    {
+        $this->imageFromWeb = collect($this->images)->firstWhere('id', $imageId);
         $this->reset('imageUpload');
     }
 
-    public function updatedImageUpload(){
+
+    /**
+     * Atualiza a imagem quando um upload novo for feito
+     */
+    public function updatedImageUpload()
+    {
         $this->reset('imageFromWeb');
     }
 
-    public function store(){
-        dd(date('d-m-Y H:i'));
 
+    /**
+     * Salva ou edita um post no banco de dados
+     */
+    public function store()
+    {
         $this->validate();
 
         $ttsController = new TTSController();
 
-        if($this->post_id){
+        // Determina se o post já existe (edição) ou se será criado um novo
+        if ($this->post_id) {
             $post = Post::findOrFail($this->post_id);
-        }else{$post = new Post();}
-        if($this->togglePostWithInstagram){
+        } else {
+            $post = new Post();
+        }
+        if ($this->togglePostWithInstagram) {
             $this->publishInstagramPost();
         }
-        if($this->toggleFeaturedPost){
+        if ($this->toggleFeaturedPost) {
             $post->featured = true;
         }
-        if($this->toggleHiddenPost){
+        if ($this->toggleHiddenPost) {
             $post->hidden = true;
         }
-        
-        if($this->date || $this->time){
-            $post->published_at = $this->date ." ". $this->time;
-        }else{
+
+        // Define a data de publicação com base nos inputs do usuário ou assume a data atual
+        if ($this->date || $this->time) {
+            $post->published_at = $this->date . " " . $this->time;
+        } else {
             $post->published_at = date('d-m-Y H:i');
         }
 
@@ -152,9 +177,9 @@ class CreatePost extends Component
         $post->category_id = $this->categoriaSelecionada;
         $post->user_id = Auth::user()->id;
 
-        $post->image = $this->handleImageUpload($post);  
+        $post->image = $this->handleImageUpload($post);
 
-        if($this->toggleGenerateAudio){
+        if ($this->toggleGenerateAudio) {
             $audio_path = $ttsController->synthesize($this->mensagem, $this->slug);
             $post->audio = $audio_path;
         }
@@ -163,45 +188,67 @@ class CreatePost extends Component
         return redirect('books/1');
     }
 
-    protected function handleImageUpload($post){
-        if($this->imageFromWeb){
+
+    /**
+     * Lida com o upload de imagens e define a imagem do post
+     */
+    protected function handleImageUpload($post)
+    {
+        if ($this->imageFromWeb) {
             $post->image = $this->imageFromWeb['src']['medium'];
-        }else if($this->imageUpload){
+        } else if ($this->imageUpload) {
             $imageName = $this->slug . "." . $this->imageUpload->extension();
-            $this->imageUpload->storeAs('uploads/images', $imageName,'public');
+            $this->imageUpload->storeAs('uploads/images', $imageName, 'public');
             $post->image = 'uploads/images/' . $imageName;
         }
         return $post->image ?? null;
     }
 
 
-    public function generateInstagramPost(){
+    /**
+     * Aciona os métodos de gerar a imagem e descrição para o post do Instagram a ser postado junto
+     */
+    public function generateInstagramPost()
+    {
         $this->generateEditedImage();
         $this->generateEditedDescription();
     }
 
-    public function generateEditedImage(){
+
+    /**
+     * Gera uma imagem editada para o Instagram a partir da imagem do post
+     */
+    public function generateEditedImage()
+    {
         // Obtém a imagem a ser processada (URL do Pexels ou UploadedFile)
         $imageSource = $this->imageFromWeb['src']['large'] ?? $this->imageUpload;
-    
+
         if (!$imageSource) {
             return;
         }
-        
+
         $this->testImage = (new ImageUtilsService)->generateEditedImage($imageSource, $this->title);
     }
 
-    public function generateEditedDescription(){
+
+    /**
+     * Gera uma descrição para o post no instagram baseada no texto do post
+     */
+    public function generateEditedDescription()
+    {
         $content = strip_tags(Str::limit($this->mensagem, 600)) . ' Acesse o link na bio ou do stories para ler o restante da mensagem!';
         $this->instagramDescription = $content;
     }
 
 
+    /**
+     * Usa a API do Instagram para publicar o post
+     */
     public function publishInstagramPost()
     {
         $instagramService = new InstagramService;
         $imgbbService = new ImgbbService;
-        
+
         // Gerar um nome único para a imagem
         $imageName = uniqid('instagram_post_') . '.jpg';
         $imageUrl = $imgbbService->uploadImage($this->testImage);
@@ -210,32 +257,47 @@ class CreatePost extends Component
         $container = $instagramService->createPostContainer($imageUrl, $this->instagramDescription);
         $instagramService->publishPost($container);
     }
-                               
-    
 
-    public function addTag(){
-        if(!$this->tags){
+
+    /**
+     * Adicionar tags ao post
+     */
+    public function addTag()
+    {
+        if (!$this->tags) {
             $countTags = 0;
-        }else{
+        } else {
             $countTags = count($this->tags);
         }
         $index = $countTags + 1;
         $this->tags[$index] = $this->currentTag;
         $this->reset('currentTag');
     }
-    public function removeTag($index){
-        if(isset($this->tags[$index])){
+
+
+    /**
+     * Remove uma tag do post, ao passar seu indice
+     */
+    public function removeTag($index)
+    {
+        if (isset($this->tags[$index])) {
             unset($this->tags[$index]);
 
             $this->tags = array_values($this->tags);
         }
     }
 
-    public function ajustTime(){
+
+    public function ajustTime()
+    {
         $this->reset('time');
         $this->reset('date');
     }
 
+
+    /**
+     * Regras de validação personalizadas
+     */
     protected function rules()
     {
         return [
@@ -257,9 +319,10 @@ class CreatePost extends Component
         ];
     }
 
+
     public function render()
     {
         $categorias = Category::all();
-        return view('livewire.create-post',["categorias" => $categorias]);
+        return view('livewire.create-post', ["categorias" => $categorias]);
     }
 }
