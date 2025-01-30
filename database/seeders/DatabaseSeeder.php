@@ -8,6 +8,8 @@ use App\Models\Post;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Crypt;
+
 class DatabaseSeeder extends Seeder
 {
     /**
@@ -17,25 +19,25 @@ class DatabaseSeeder extends Seeder
     {
         // Post::factory(30)->create();
 
-        // User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        //     'password' => '123'
-        // ]);
+        User::factory()->create([
+            'name' => 'Test User',
+            'email' => 'test@example.com',
+            'password' => '123'
+        ]);
         // Category::factory()->create([
         //     'name' => 'Sem categoria',
         //     'slug' => 'sem-categoria',
         //     'color' => '#cccccc',
         // ]);
 
-        // DB::table('settings')->insert([
-        //     'key' => 'instagram_api_key',
-        //     'value' => 'default_value'
-        // ]);
+        DB::table('settings')->insert([
+            'key' => 'instagram_api_key',
+            'value' => Crypt::encryptString('defaut_value')
+        ]);
 
         DB::table('settings')->insert([
             'key' => 'instagram_user_id',
-            'value' => 'default_value'
+            'value' => Crypt::encryptString('defaut_value')
         ]);
     }
 }
