@@ -185,7 +185,7 @@ class CreatePost extends Component
         }
 
         $post->save();
-        return redirect('books/1');
+        return redirect('/posts/'.$this->slug);
     }
 
 
