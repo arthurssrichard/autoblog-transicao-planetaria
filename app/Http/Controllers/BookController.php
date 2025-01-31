@@ -36,7 +36,7 @@ class BookController extends Controller
         }
         
         $book->save();
-        return redirect('/books');
+        return redirect('/blogadmin/books');
     }
 
     public function show($id){

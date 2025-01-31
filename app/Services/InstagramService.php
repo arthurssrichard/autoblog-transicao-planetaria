@@ -23,6 +23,7 @@ class InstagramService{
 
         $userId = $settings->setting('instagram_user_id');
         $apiKey = $settings->setting('instagram_api_key');
+        //dd("testando requisicao com id: $userId e key: $apiKey");
         try{
 
             $response = $this->client->request('POST',$userId.'/media',[
@@ -47,9 +48,10 @@ class InstagramService{
      */
     public function publishPost($container){
         try {
+            $settings = new SettingsService;
             $containerId = $container['id'];
-            $userId = config('services.instagram.test_user_id');
-            $apiKey = config('services.instagram.access_token');
+            $userId = $settings->setting('instagram_user_id');
+            $apiKey = $settings->setting('instagram_api_key');
     
             $publishResponse = $this->client->request('POST', $userId . '/media_publish',[
                 'query' => [
