@@ -33,7 +33,7 @@ class PostList extends Component
     }
     public function render()
     {
-        $now = date("Y-m-d");
+        $now = date("Y-m-d H:i");
         $validCategory = Category::where('slug', $this->category)->exists();
 
         $posts = Post::published()

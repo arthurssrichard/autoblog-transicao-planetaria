@@ -38,7 +38,15 @@ class Post extends Model
 
     /* Retorna o caminho da imagem do post */
     public function getImagePathAttribute(){
-        return  (str_starts_with($this->image, 'https://') ? $this->image : asset('storage/'.$this->image));
+        $image = 'https://images.pexels.com/photos/30430058/pexels-photo-30430058/free-photo-of-philippine-tropical-foliage-close-up.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1';
+        if($this->image !== null){
+            if(str_starts_with($this->image, 'https://')){
+                $image = $this->image;
+            }else{
+                $image = asset('storage/'.$this->image);
+            }
+        }
+        return $image;
     }
 
     /* ImageIsLocal

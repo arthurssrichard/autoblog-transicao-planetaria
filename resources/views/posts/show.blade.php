@@ -16,7 +16,7 @@
 
         <div class="lg:min-h-96 sm:min-h-80 flex flex-col z-10 justify-center items-center text-left w-full">
             <div class="p-4 md:p-5 h-72 w-full lg:w-96 flex flex-row z-10 justify-center items-center">
-                <img src="{{str_starts_with($post->image, 'https://images.pexels.com') ? $post->image : asset('storage/'.$post->image)}}" alt="{{$post->title}}"
+                <img src="{{ $post->imagePath }}" alt="{{$post->title}}"
                 class="rounded-lg w-full h-full object-cover">
             </div>
         </div>

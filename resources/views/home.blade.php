@@ -18,7 +18,7 @@
                 <div class="md:col-span-1 col-span-3">
                     <a href="/posts/{{$post->slug}}">
                         <div class="h-72 max-w-96 flex flex-row z-10 justify-center items-center">
-                            <img class="rounded-lg w-full h-full object-cover" src="{{$post->image}}">
+                            <img class="rounded-lg w-full h-full object-cover" src="{{ $post->imagePath }}">
                         </div>
                     </a>
                     <div class="mt-3">
@@ -45,7 +45,7 @@
                 <div class="md:col-span-1 col-span-3">
                     <a href="/posts/{{$post->slug}}">
                         <div class="h-72 max-w-96 flex flex-row z-10 justify-center items-center">
-                            <img class="rounded-lg w-full h-full object-cover" src="{{$post->image}}">
+                            <img class="rounded-lg w-full h-full object-cover" src="{{$post->imagePath}}">
                         </div>
                     </a>
                     <div class="mt-3">
