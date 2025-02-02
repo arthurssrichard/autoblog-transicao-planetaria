@@ -13,8 +13,7 @@ services:
     command: >
       sh -c "php artisan migrate --force &&
              apache2-foreground"
-
-
+ 
   postgres:
     image: postgres:17.2
     ports:
@@ -24,6 +23,7 @@ services:
       POSTGRES_USER: ${DB_USERNAME}
       POSTGRES_PASSWORD: ${DB_PASSWORD}
       POSTGRES_DB: ${DB_DATABASE}
+      POSTGRES_HOST_AUTH_METHOD: ${POSTGRES_HOST_AUTH_METHOD}
       BP_DB_DATABASE: ${BP_DB_DATABASE}
     networks:
       - docker-network
