@@ -33,6 +33,13 @@ class BookController extends Controller
             $bookName = md5($request->book->getClientOriginalName() . strtotime("now")).".".$request->book->extension();
             $bookFile->storeAs('uploads/books',$bookName,'public');
             $book->path = 'uploads/books/'.$bookName;
+        }else{
+            if(!$request->hasFile('book')){
+                dd("sem arquivo book");
+            }
+            if(!$request->file('book')->isValid()){
+                dd("tem arquivo livro mas nao é valido");
+            }
         }
         
         $book->save();
