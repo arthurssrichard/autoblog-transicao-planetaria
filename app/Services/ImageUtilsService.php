@@ -21,14 +21,21 @@ class ImageUtilsService{
             // Para arquivos enviados, obtemos o caminho real
             $imageData = file_get_contents($imageSource->getRealPath());
         } elseif (filter_var($imageSource, FILTER_VALIDATE_URL)) {
+
             // Para URLs válidas (como Pexels), baixamos o conteúdo
-            $imageData = file_get_contents($imageSource);
+            $tempPath = sys_get_temp_dir() . '/temp_image.jpg';
+            file_put_contents($tempPath, file_get_contents($imageSource));
+            $imageData = $tempPath;
+
+            //dd($imageSource);
+            //dd($imageData);
         } else {
             throw new \Exception("Fonte de imagem inválida.");
         }
     
         // Lê e manipula a imagem
         $image = $manager->read($imageData);
+
     
         // Ajusta o brilho da imagem (opcional)
         //$image->brightness(-30);

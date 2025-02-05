@@ -227,6 +227,17 @@ class CreatePost extends Component
             return;
         }
 
+        $parsedUrl = parse_url($imageSource);
+        // Verifica se a URL contém uma query string
+        if (isset($parsedUrl['query'])) {
+            // Reconstrua a URL sem a query
+            unset($parsedUrl['query']);
+        }
+        $parsedUrl = (isset($parsedUrl['scheme']) ? $parsedUrl['scheme'] . '://' : '') .
+        (isset($parsedUrl['host']) ? $parsedUrl['host'] : '') .
+        (isset($parsedUrl['path']) ? $parsedUrl['path'] : '');
+    
+
         $this->testImage = (new ImageUtilsService)->generateEditedImage($imageSource, $this->title);
     }
 

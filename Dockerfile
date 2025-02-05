@@ -6,6 +6,9 @@ RUN apt-get update && apt-get install -y \
     libzip-dev \
     zip \
     libpng-dev \
+    libjpeg-dev \
+    libfreetype6-dev \
+    libjpeg62-turbo-dev \
     libpq-dev
 
 RUN curl -sL https://deb.nodesource.com/setup_18.x | bash - && \
