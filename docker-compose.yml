@@ -8,6 +8,8 @@ services:
       - docker-network
     ports:
       - 8080:80
+    volumes:
+      - .:/var/www/html
     depends_on:
       - postgres
     command: >
