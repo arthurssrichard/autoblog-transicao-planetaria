@@ -9,7 +9,7 @@ services:
     ports:
       - 8080:80
     volumes:
-      - .:/var/www/html
+      - ./storage/uploads:/var/www/html/public/storage/uploads
     depends_on:
       - postgres
     command: >
