@@ -63,7 +63,7 @@ class InstagramService{
             $publishData = json_decode($publishResponse->getBody(), true);
     
         } catch (\Exception $e) {
-            echo "Ocorreu um erro ao publicar o post: ". $e->getMessage();
+            dd("Ocorreu um erro ao publicar o post: ". $e->getMessage());
         }
     }
 }
