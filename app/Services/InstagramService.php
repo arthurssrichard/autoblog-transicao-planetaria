@@ -35,10 +35,12 @@ class InstagramService{
             ]);
 
             $data = json_decode($response->getBody(), true);
+
+            dd("Resposta do Instagram (media):", $data);
             return $data;
 
         }catch(\Exception $e){
-            echo "Ocorreu um erro ao preparar o post: " . $e->getMessage();
+            dd("Ocorreu um erro ao preparar o post: " . $e->getMessage());
         }
     }
 
