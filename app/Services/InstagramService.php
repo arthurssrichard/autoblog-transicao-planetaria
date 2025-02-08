@@ -35,8 +35,6 @@ class InstagramService{
             ]);
 
             $data = json_decode($response->getBody(), true);
-
-            dd("Resposta do Instagram (media):", $data);
             return $data;
 
         }catch(\Exception $e){
