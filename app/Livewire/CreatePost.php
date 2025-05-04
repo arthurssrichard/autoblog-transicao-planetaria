@@ -264,6 +264,7 @@ class CreatePost extends Component
         $imageName = uniqid('instagram_post_') . '.jpg';
         $imageUrl = $imgbbService->uploadImage($this->testImage);
 
+        sleep(2);
         // cria e posta o container
         $container = $instagramService->createPostContainer($imageUrl, $this->instagramDescription);
         $instagramService->publishPost($container);
