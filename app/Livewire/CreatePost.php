@@ -264,7 +264,7 @@ class CreatePost extends Component
 
         
         $imageUrl = (new ImageUtilsService)->storeTemporaryBase64Image($this->testImage);
-        dd($imageUrl);
+        // dd($imageUrl);
         // cria e posta o container
         $container = $instagramService->createPostContainer($imageUrl, $this->instagramDescription);
         $instagramService->publishPost($container);
