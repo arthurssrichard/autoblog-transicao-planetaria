@@ -17,7 +17,6 @@ use App\Services\GroqService;
 use App\Services\PexelsService;
 use App\Services\ImageUtilsService;
 use App\Services\InstagramService;
-use App\Services\ImgbbService;
 
 class CreatePost extends Component
 {
@@ -143,6 +142,7 @@ class CreatePost extends Component
      */
     public function store()
     {
+        // dd(public_path('storage/temp'));
         $this->validate();
 
         $ttsController = new TTSController();
@@ -258,13 +258,13 @@ class CreatePost extends Component
     public function publishInstagramPost()
     {
         $instagramService = new InstagramService;
-        $imgbbService = new ImgbbService;
 
         // Gerar um nome único para a imagem
         $imageName = uniqid('instagram_post_') . '.jpg';
-        $imageUrl = $imgbbService->uploadImage($this->testImage);
 
-        sleep(2);
+        
+        $imageUrl = (new ImageUtilsService)->storeTemporaryBase64Image($this->testImage);
+        dd($imageUrl);
         // cria e posta o container
         $container = $instagramService->createPostContainer($imageUrl, $this->instagramDescription);
         $instagramService->publishPost($container);

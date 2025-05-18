@@ -5,6 +5,8 @@ namespace App\Services;
 use Intervention\Image\ImageManager;
 use Intervention\Image\Drivers\Imagick\Driver;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
 
 class ImageUtilsService{
     public function generateEditedImage($imageSource, $title)
@@ -100,6 +102,20 @@ class ImageUtilsService{
     
         // Retorna as linhas unidas por quebras de linha
         return implode("\n", $linhas);
+    }
+
+    function storeTemporaryBase64Image($base64Image)
+    {
+        $imageData = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $base64Image));
+        $filename = Str::uuid() . '.jpg';
+        $path = "temp/{$filename}";
+
+        Storage::disk('public')->put($path, $imageData);
+
+        // Mantém o cache da imagem por 30 segundos (controle de validade)
+        cache()->put("temp_image:{$filename}", true, now()->addSeconds(30));
+
+        return url("storage/temp/{$filename}");
     }
     
 }

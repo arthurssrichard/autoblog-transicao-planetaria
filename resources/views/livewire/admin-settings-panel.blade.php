@@ -43,6 +43,16 @@
                 </div>
             </div>
 
+            <hr class="border-gray-100 dark:border-gray-700 my-3">
+
+            <h3 class="text-xl font-bold dark:text-neutral-300">Temporários</h3>
+            <div class="flex flex-col w-max">
+                <div class="mt-3 flex items-center gap-4 p-2 justify-between">
+                    <h3 class="text-xl font-semibold text-neutral-700 dark:text-neutral-400">Imagens temporárias</h3>
+                    <button class="btn-small-blue" wire:click="clearTempFolder()">Limpar</button>
+                </div>
+                <span class="text-sm text-neutral-800 dark:text-neutral-300">Arquivos temporários: {{$tempFilesCount}}</span>
+            </div>
         </div>
 
         <div role="tabpanel" class="{{$tab === 'integrations' ? '' : 'hidden'}}">

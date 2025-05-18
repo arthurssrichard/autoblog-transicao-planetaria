@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Artisan;
 use App\Services\SettingsService;
 use Livewire\Attributes\Rule;
 use App\Models\User;
+use Illuminate\Support\Facades\File;
 
 class AdminSettingsPanel extends Component
 {
@@ -21,6 +22,8 @@ class AdminSettingsPanel extends Component
 
     #[Rule('sometimes|min:2|max:50')]
     public $instagramUserId;
+
+    public $tempFilesCount;
 
     public $tabs = [
         'cache' => 'Cache',
@@ -106,8 +109,19 @@ class AdminSettingsPanel extends Component
         }
     }
 
+    public function clearTempFolder(){
+        $tempPath = public_path('storage/temp');
+        $files = File::files($tempPath);
+        foreach ($files as $file) {
+            File::delete($file->getPathname());
+        }
+        session()->flash('success', 'Pasta temporária limpa com sucesso.');
+    }
+
     public function render()
     {
+        $this->tempFilesCount = count(File::files(public_path('storage/temp')));
+
         return view('livewire.admin-settings-panel', [
             'tabs' => $this->tabs,
         ]);
