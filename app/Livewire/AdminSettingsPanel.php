@@ -120,7 +120,7 @@ class AdminSettingsPanel extends Component
 
     public function render()
     {
-        $this->tempFilesCount = count(File::files(public_path('storage/temp')));
+        $this->tempFilesCount = count(File::files(public_path('storage/temp'))) ?? 0;
 
         return view('livewire.admin-settings-panel', [
             'tabs' => $this->tabs,

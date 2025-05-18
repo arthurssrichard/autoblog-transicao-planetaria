@@ -10,14 +10,6 @@ use Illuminate\Support\Facades\File;
 class HomeController extends Controller
 {
     public function index(){
-
-        // teste de deleterar
-        $tempPath = public_path('storage/temp');
-        $files = File::files($tempPath);
-        foreach ($files as $file) {
-            File::delete($file->getPathname());
-        }
-
         $posts = Post::published()
         ->orderBy('published_at','desc')->take(12)->get();
         $featuredPosts = Post::orderBy('published_at','desc')->where('featured',1)->get();
